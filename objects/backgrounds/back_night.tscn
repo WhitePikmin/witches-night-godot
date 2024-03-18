@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=3 uid="uid://cnl4vm7dqusvj"]
+
+[ext_resource type="Texture2D" uid="uid://bdq41new3qv3p" path="res://images/backgrounds/bck_night_1-0.png" id="1_jk7mn"]
+[ext_resource type="Texture2D" uid="uid://dm133n85u0yhc" path="res://images/backgrounds/bck_stars-0.png" id="2_v7wth"]
+[ext_resource type="Texture2D" uid="uid://b1rtnqxr3kpp3" path="res://images/backgrounds/night-clouds-bg.png-0.png" id="3_f46m5"]
+
+[node name="BackNight" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
+
+[node name="Sky" type="Sprite2D" parent="CanvasLayer"]
+z_index = -4096
+scale = Vector2(3, 3)
+texture = ExtResource("1_jk7mn")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxStars" type="ParallaxBackground" parent="."]
+layer = -95
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxStars"]
+texture_repeat = 2
+motion_scale = Vector2(0.02, 0)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Stars" type="Sprite2D" parent="ParallaxStars/ParallaxLayer"]
+z_index = -4095
+scale = Vector2(3, 3)
+texture = ExtResource("2_v7wth")
+centered = false
+metadata/_edit_lock_ = true
+
+[node name="ParallaxClouds" type="ParallaxBackground" parent="."]
+layer = -95
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxClouds"]
+texture_repeat = 2
+motion_scale = Vector2(2, 0)
+motion_offset = Vector2(200, 0)
+motion_mirroring = Vector2(3840, 0)
+
+[node name="Clouds" type="Sprite2D" parent="ParallaxClouds/ParallaxLayer"]
+z_index = -4095
+scale = Vector2(3, 3)
+texture = ExtResource("3_f46m5")
+centered = false
+metadata/_edit_lock_ = true

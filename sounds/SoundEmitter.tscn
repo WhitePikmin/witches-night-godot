@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3 uid="uid://drj7h75f1th4f"]
+
+[ext_resource type="AudioStream" uid="uid://kuebctlfv2u1" path="res://sounds/assets/sfx/snd_poof.wav" id="1_i010v"]
+
+[sub_resource type="GDScript" id="GDScript_k1aua"]
+script/source = "extends AudioStreamPlayer2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+func destroy():
+	stop();
+	queue_free();
+"
+
+[node name="SoundEmitter" type="AudioStreamPlayer2D"]
+stream = ExtResource("1_i010v")
+script = SubResource("GDScript_k1aua")
+
+[connection signal="finished" from="." to="." method="destroy"]

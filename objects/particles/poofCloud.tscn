@@ -1,0 +1,63 @@
+[gd_scene load_steps=11 format=3 uid="uid://b6bx65dqibtp1"]
+
+[ext_resource type="Texture2D" uid="uid://c8f6nu4mhwlnw" path="res://images/sprites/spr_poof-5.png" id="1_t2cgi"]
+[ext_resource type="Texture2D" uid="uid://btoutr7okqicr" path="res://images/sprites/spr_poof-6.png" id="2_m112t"]
+[ext_resource type="Texture2D" uid="uid://bwx17qd30aip0" path="res://images/sprites/spr_poof-7.png" id="3_mjo20"]
+[ext_resource type="Texture2D" uid="uid://1k6qrsv3x2d" path="res://images/sprites/spr_poof-4.png" id="4_meany"]
+[ext_resource type="Texture2D" uid="uid://d3x7la7oatryj" path="res://images/sprites/spr_poof-2.png" id="5_ipk3g"]
+[ext_resource type="Texture2D" uid="uid://egl05yfd0al8" path="res://images/sprites/spr_poof-1.png" id="6_nlg81"]
+[ext_resource type="Texture2D" uid="uid://cfdagfq3b34nq" path="res://images/sprites/spr_poof-0.png" id="7_hgg3l"]
+[ext_resource type="Texture2D" uid="uid://pub4vtjeu0ic" path="res://images/sprites/spr_poof-3.png" id="8_8d3fv"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_unfpt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_t2cgi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_m112t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_mjo20")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_meany")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_ipk3g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_nlg81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_hgg3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_8d3fv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="GDScript" id="GDScript_23drj"]
+script/source = "extends AnimatedSprite2D
+
+
+
+func _ready():
+	play(\"default\",1.0,false);
+
+func destroy():
+	print(\"end\");
+	queue_free();
+"
+
+[node name="PoofCloud" type="AnimatedSprite2D"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_unfpt")
+offset = Vector2(0, -20)
+script = SubResource("GDScript_23drj")
+
+[connection signal="animation_looped" from="." to="." method="destroy"]

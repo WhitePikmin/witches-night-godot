@@ -1,0 +1,132 @@
+[gd_scene load_steps=26 format=3 uid="uid://xr5vi16elmg7"]
+
+[ext_resource type="Script" path="res://objects/adele.gd" id="1_sfrav"]
+[ext_resource type="Texture2D" uid="uid://dy1x64fjtvpk7" path="res://images/sprites/spr_adele-7.png" id="2_11cl8"]
+[ext_resource type="Texture2D" uid="uid://b0jk2j28cddiq" path="res://images/sprites/spr_adele-0.png" id="3_eek57"]
+[ext_resource type="Texture2D" uid="uid://dlij7pgkspcy4" path="res://images/sprites/spr_adele-12.png" id="4_i6fhf"]
+[ext_resource type="Texture2D" uid="uid://bc4y18wtkj056" path="res://images/sprites/spr_adele-2.png" id="5_p1sey"]
+[ext_resource type="Texture2D" uid="uid://du83u1d2s417w" path="res://images/sprites/spr_adele-4.png" id="6_114kc"]
+[ext_resource type="Texture2D" uid="uid://bmrxejvjt7n1j" path="res://images/sprites/spr_adele-8.png" id="7_iae51"]
+[ext_resource type="Texture2D" uid="uid://ccdqubwqdlu4u" path="res://images/sprites/spr_adele-13.png" id="8_klv8p"]
+[ext_resource type="Texture2D" uid="uid://ct351ff1kdax2" path="res://images/sprites/spr_adele-3.png" id="9_ioics"]
+[ext_resource type="Texture2D" uid="uid://d2rf20jvhgybs" path="res://images/sprites/spr_adele-10.png" id="10_4sdw7"]
+[ext_resource type="Texture2D" uid="uid://cj5cleulf2ep8" path="res://images/sprites/spr_adele-1.png" id="11_2q45t"]
+[ext_resource type="Texture2D" uid="uid://dx018xbft4dud" path="res://images/sprites/spr_adele-9.png" id="12_08wp8"]
+[ext_resource type="Texture2D" uid="uid://b7wvqrnufx4wb" path="res://images/sprites/spr_adele-11.png" id="13_cowbr"]
+[ext_resource type="Texture2D" uid="uid://bpc8ognt8gp05" path="res://images/sprites/spr_adele-5.png" id="14_knsu2"]
+[ext_resource type="Texture2D" uid="uid://bilgaiflwdbs0" path="res://images/sprites/spr_adele-6.png" id="15_y0q4n"]
+[ext_resource type="Texture2D" uid="uid://tnsa0lg02qdb" path="res://images/sprites/spr_adele_hurts-1.png" id="16_4pfxe"]
+[ext_resource type="Texture2D" uid="uid://coci0x8q063un" path="res://images/sprites/spr_adele_hurts-3.png" id="17_67gwa"]
+[ext_resource type="Texture2D" uid="uid://d21tgda03hg7g" path="res://images/sprites/spr_adele_hurts-0.png" id="18_qg2i0"]
+[ext_resource type="Texture2D" uid="uid://bau1hrmnlglld" path="res://images/sprites/spr_adele_hurts-2.png" id="19_cd7q2"]
+[ext_resource type="Texture2D" uid="uid://b3jv20gjmwdlq" path="res://images/sprites/spr_adele_throw-3.png" id="20_acy3r"]
+[ext_resource type="Texture2D" uid="uid://itu00vbdm6g" path="res://images/sprites/spr_adele_throw-2.png" id="21_kojlo"]
+[ext_resource type="Texture2D" uid="uid://dosayfdqp5xcs" path="res://images/sprites/spr_adele_throw-5.png" id="22_47ldd"]
+[ext_resource type="Texture2D" uid="uid://bwx5scp5mmd4h" path="res://images/sprites/spr_adele_throw-4.png" id="23_tta8o"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6m6af"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_11cl8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_eek57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_i6fhf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_p1sey")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_114kc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_iae51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_klv8p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_ioics")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_4sdw7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_2q45t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_08wp8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_cowbr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_knsu2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_y0q4n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("16_4pfxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_67gwa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_qg2i0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_cd7q2")
+}],
+"loop": true,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("20_acy3r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_kojlo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_47ldd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_tta8o")
+}],
+"loop": true,
+"name": &"shooting",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sij80"]
+radius = 20.0
+
+[node name="Adele" type="CharacterBody2D"]
+position = Vector2(78, 104)
+collision_mask = 183
+motion_mode = 1
+floor_stop_on_slope = false
+platform_on_leave = 2
+platform_floor_layers = 0
+script = ExtResource("1_sfrav")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(11, -1)
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_6m6af")
+animation = &"shooting"
+frame_progress = 0.93212
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(32, 3)
+shape = SubResource("CircleShape2D_sij80")

@@ -1,0 +1,221 @@
+[gd_scene load_steps=18 format=3 uid="uid://bgfc3gc0cep1v"]
+
+[ext_resource type="Script" path="res://scripts/Rail.gd" id="1_5ohgb"]
+[ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/adele.tscn" id="1_gn063"]
+[ext_resource type="Script" path="res://scripts/room.gd" id="1_tv6x5"]
+[ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_dt6l1"]
+[ext_resource type="PackedScene" uid="uid://bpfgveta0ea65" path="res://objects/enemies/ghost.tscn" id="3_tcqn0"]
+[ext_resource type="PackedScene" uid="uid://7441yul28hfm" path="res://objects/enemies/fairy.tscn" id="5_3bq87"]
+[ext_resource type="PackedScene" uid="uid://dl1ak4eejd8tb" path="res://objects/backgrounds/back_plains.tscn" id="5_asnd3"]
+[ext_resource type="Script" path="res://scripts/TextDrawer.gd" id="6_qqywd"]
+[ext_resource type="PackedScene" uid="uid://dos7d4s3nvf50" path="res://misc/hp_tick.tscn" id="7_84gkw"]
+[ext_resource type="Texture2D" uid="uid://cm34tnjyksr3h" path="res://images/sprites/spr_collectible_star-0.png" id="10_25gct"]
+[ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
+[ext_resource type="PackedScene" uid="uid://dv4xdaug7hhe2" path="res://objects/enemies/fairy-green.tscn" id="12_43ux3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mphy4"]
+size = Vector2(32, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qicwi"]
+size = Vector2(1920, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
+shader = ExtResource("2_dt6l1")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.215
+shader_parameter/scanlines_width = 0.291
+shader_parameter/grille_opacity = 0.115
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = true
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 1.764
+shader_parameter/distort_intensity = 0.083
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.0
+shader_parameter/static_noise_intensity = 0.03
+shader_parameter/aberration = 0.00500005
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.05
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.159
+
+[sub_resource type="GDScript" id="GDScript_ae5al"]
+script/source = "extends Node2D
+
+var ticks: Array;
+var HPCount;
+@onready var hpSprite = load(\"res://images/sprites/spr_healthbar-0.png\")
+@onready var hpEmptySprite = load(\"res://images/sprites/spr_healthbar-1.png\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	ticks = [];
+	HPCount = Global.PLAYER_HP_MAX;
+	ticks.push_back($HPTick);
+	var a: Sprite2D;
+	var tickAsset = load(\"res://misc/hp_tick.tscn\");
+	for i in range(1,Global.PLAYER_HP_MAX):
+		var newTick = tickAsset.instantiate();
+		
+		var newPosition = Vector2(0 + (($HPTick.texture.get_width() + 2) * (i) * 3),0);
+		newTick.position = newPosition;
+		add_child(newTick);
+		ticks.push_back(newTick);
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if (HPCount != Global.PlayerHP):
+		HPCount = Global.PlayerHP;
+		for i in range(0,Global.PLAYER_HP_MAX):
+			if i < HPCount:
+				ticks[i].texture = hpSprite;
+			else:
+				ticks[i].texture = hpEmptySprite;
+"
+
+[sub_resource type="GDScript" id="GDScript_xop3x"]
+script/source = "extends Node2D
+
+var starDisplay: int;
+const OFFSET = 32 * 3;
+var display = true;
+const DISPLAY_TIME = 60 * 3;
+var displayTimer = DISPLAY_TIME;
+@onready var initialPosition = position;
+
+@onready var textDrawer = $text_drawer;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	starDisplay = Global.starCount;
+	refreshTextDrawer();
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	displayTimer -= delta * Global.FPS_CAP;
+	if (starDisplay != Global.starCount):
+		starDisplay += 1;
+		displayTimer = DISPLAY_TIME;
+		position.y -= 36.0;
+		refreshTextDrawer();
+	
+	if(displayTimer <= 0):
+		position.y = move_toward(position.y,initialPosition.y - OFFSET,10.0);
+	else:
+		position.y = move_toward(position.y,initialPosition.y,10.0);
+	pass
+
+func refreshTextDrawer():
+	textDrawer.set_text(str(starDisplay));
+	textDrawer.display_text();
+"
+
+[node name="room_test" type="Node2D"]
+script = ExtResource("1_tv6x5")
+
+[node name="Enemies" type="Node" parent="."]
+
+[node name="Fairy7" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(2071, 66)
+
+[node name="Fairy" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(3699, 907)
+
+[node name="Fairy8" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(3715, 383)
+
+[node name="Fairy9" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(4131, 627)
+
+[node name="Fairy10" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(4255, 223)
+
+[node name="Fairy11" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(4543, 803)
+
+[node name="Fairy12" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(4787, 539)
+
+[node name="Fairy13" parent="Enemies" instance=ExtResource("5_3bq87")]
+position = Vector2(5675, 703)
+
+[node name="Ghost" parent="Enemies" instance=ExtResource("3_tcqn0")]
+position = Vector2(2115, 544)
+
+[node name="Rail" type="Node2D" parent="."]
+script = ExtResource("1_5ohgb")
+
+[node name="Camera2D" type="Camera2D" parent="Rail"]
+anchor_mode = 0
+
+[node name="Adele" parent="Rail" instance=ExtResource("1_gn063")]
+position = Vector2(278, 517)
+
+[node name="ScreenBorders" type="StaticBody2D" parent="Rail"]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Rail/ScreenBorders"]
+position = Vector2(-16, 540)
+shape = SubResource("RectangleShape2D_mphy4")
+debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Rail/ScreenBorders"]
+position = Vector2(1936, 540)
+shape = SubResource("RectangleShape2D_mphy4")
+debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Rail/ScreenBorders"]
+position = Vector2(960, -16)
+shape = SubResource("RectangleShape2D_qicwi")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Rail/ScreenBorders"]
+position = Vector2(960, 1096)
+shape = SubResource("RectangleShape2D_qicwi")
+
+[node name="BackPlains" parent="." instance=ExtResource("5_asnd3")]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="CRT_filter" type="ColorRect" parent="HUD"]
+visible = false
+z_index = 4096
+z_as_relative = false
+material = SubResource("ShaderMaterial_8ksru")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="HP" type="Node2D" parent="HUD"]
+position = Vector2(81, 1038)
+script = SubResource("GDScript_ae5al")
+
+[node name="HPTick" parent="HUD/HP" instance=ExtResource("7_84gkw")]
+
+[node name="StarDisplay" type="Node2D" parent="HUD"]
+position = Vector2(60, 0)
+script = SubResource("GDScript_xop3x")
+
+[node name="text_drawer" type="Node2D" parent="HUD/StarDisplay"]
+position = Vector2(96, 66)
+script = ExtResource("6_qqywd")
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/StarDisplay"]
+position = Vector2(0, 66)
+scale = Vector2(3, 3)
+texture = ExtResource("10_25gct")
+
+[node name="Cyclop" parent="." instance=ExtResource("11_o0qac")]
+position = Vector2(2293, 777)
+
+[node name="Fairy-Green" parent="." instance=ExtResource("12_43ux3")]
+position = Vector2(2259, 224)

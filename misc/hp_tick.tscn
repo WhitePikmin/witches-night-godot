@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dos7d4s3nvf50"]
+
+[ext_resource type="Texture2D" uid="uid://cl0703gt326tr" path="res://images/sprites/spr_healthbar-0.png" id="1_3r18f"]
+
+[node name="HPTick" type="Sprite2D"]
+scale = Vector2(3, 3)
+texture = ExtResource("1_3r18f")

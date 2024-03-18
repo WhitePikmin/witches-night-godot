@@ -1,0 +1,111 @@
+[gd_scene load_steps=10 format=3 uid="uid://bpfgveta0ea65"]
+
+[ext_resource type="PackedScene" uid="uid://c1qaxe47flplm" path="res://objects/particles/GhostTail.tscn" id="2_8prjx"]
+[ext_resource type="Shader" path="res://shader/flash.gdshader" id="2_m634g"]
+[ext_resource type="Texture2D" uid="uid://djuwn5o4npsgy" path="res://images/sprites/spr_ghost-0.png" id="3_2ecef"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="5_jeo7p"]
+
+[sub_resource type="GDScript" id="GDScript_hp7bb"]
+script/source = "extends Enemy
+
+const SHOOT_FREQUENCY = 60.0 * 3;
+const MID_POINT = 540;
+
+var shootCounter = 120.0;
+var x = 0;
+
+const BULLET_PATH = \"res://objects/bullet.tscn\"
+@onready var onScreenNotifier = $VisibleOnScreenNotifier2D;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	setSprite($AnimatedSprite2D);
+	sprite.play(\"default\",1.0,false);
+	direction = Vector2(-1,-0).normalized();
+	x = PI / 2;
+	speed = 4.0;
+	HP = 15;
+	spawnOrbittingBullets();
+	
+func spawnOrbittingBullets():
+	for i in range(0,4):
+		var bullet = Global.createObject(get_tree().root,\"res://objects/projectiles/bulletGhost.tscn\",Vector2(0,0));
+		bullet.angle = i * 90;
+		add_child(bullet);
+	pass
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(d):
+	super._process(d);
+	
+	direction = Vector2(-1.5,sin(x)).normalized();
+	x += (d / Global.FPS_CAP) / 0.01;
+	move();
+
+
+func die():
+	spawnStars(6);
+	super();
+	
+	
+func destroy():
+	queue_free();
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
+shader = ExtResource("2_m634g")
+shader_parameter/white = Vector3(1, 1, 1)
+shader_parameter/strength = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kj16a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_2ecef")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kb4cq"]
+radius = 8.00694
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wn0n"]
+radius = 10.3333
+
+[node name="Ghost" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 8
+gravity_scale = 0.0
+script = SubResource("GDScript_hp7bb")
+
+[node name="ghostTail" parent="." instance=ExtResource("2_8prjx")]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_i0ji3")
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kj16a")
+frame_progress = 0.0250174
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 5)
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_kb4cq")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-2.5, 2.5)
+scale = Vector2(4.15, 4.15)
+
+[node name="HurtBox" type="Area2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(3, 3)
+collision_layer = 16
+script = ExtResource("5_jeo7p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1.33333, 1.33333)
+scale = Vector2(0.971856, 0.906141)
+shape = SubResource("CircleShape2D_0wn0n")
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

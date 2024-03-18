@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://c1qaxe47flplm"]
+
+[ext_resource type="Texture2D" uid="uid://bd2slf4twjj5b" path="res://images/sprites/spr_bullet_ball-0.png" id="1_aohrb"]
+
+[sub_resource type="Curve" id="Curve_vyt4x"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -3.20451, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_ee4tn"]
+curve = SubResource("Curve_vyt4x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j6l38"]
+particle_flag_disable_z = true
+gravity = Vector3(0, 0, 0)
+scale_min = 3.0
+scale_max = 3.0
+scale_curve = SubResource("CurveTexture_ee4tn")
+
+[node name="ghostTail" type="GPUParticles2D"]
+amount = 15
+process_material = SubResource("ParticleProcessMaterial_j6l38")
+texture = ExtResource("1_aohrb")
+lifetime = 1.5

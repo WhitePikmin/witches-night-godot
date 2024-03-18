@@ -1,0 +1,125 @@
+[gd_scene load_steps=12 format=3 uid="uid://bm8bvoftj5g3k"]
+
+[ext_resource type="Shader" path="res://shader/flash.gdshader" id="1_pnrfm"]
+[ext_resource type="Texture2D" uid="uid://c5un0yg7246yc" path="res://images/sprites/spr_enemy_eye_monster-3.png" id="2_3hpc6"]
+[ext_resource type="Texture2D" uid="uid://c3peuqdiiohd4" path="res://images/sprites/spr_enemy_eye_monster-2.png" id="3_4l3br"]
+[ext_resource type="Texture2D" uid="uid://dhxfnoubgvf3" path="res://images/sprites/spr_enemy_eye_monster-1.png" id="4_5y1q6"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_nf8i1"]
+[ext_resource type="Texture2D" uid="uid://cabusxjnbcwdp" path="res://images/sprites/spr_enemy_eye_monster-0.png" id="5_odly2"]
+
+[sub_resource type="GDScript" id="GDScript_44pgm"]
+script/source = "extends Enemy
+
+const SHOOT_FREQUENCY = 60.0 * 3;
+const MID_POINT = 540;
+const BULLET_COUNT = 8;
+const BULLET_ITER = (PI / BULLET_COUNT) * 2;
+
+var shootCounter = 120.0;
+var moving = true;
+var shootIteration = 0;
+
+const BULLET_PATH = \"res://objects/bullet.tscn\"
+@onready var onScreenNotifier = $VisibleOnScreenNotifier2D;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	setSprite($AnimatedSprite2D);
+	sprite.play(\"default\",1.0,false);
+	direction = Vector2(-1.0,0.0).normalized();
+	HP = 10;
+	shootCounter = SHOOT_FREQUENCY;
+	speed = 15.0;
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(d):
+	super._process(d);
+	
+	if (moving):
+		if (speed <= 0):
+			speed = 0;
+			moving = false;
+		else:
+			speed -= 0.5;
+	else:
+		shootCounter += delta;
+		if shootCounter >= SHOOT_FREQUENCY:
+			shootCounter -= SHOOT_FREQUENCY;
+			Global.createObject(get_tree().root,\"res://objects/projectiles/laser-sine.tscn\",position - Vector2(9.0,-9.0));
+	move();
+	
+
+
+func die():
+	spawnStars(6);
+	super();
+	
+	
+func destroy():
+	queue_free();
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
+shader = ExtResource("1_pnrfm")
+shader_parameter/white = Vector3(1, 1, 1)
+shader_parameter/strength = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kj16a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_3hpc6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_4l3br")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_5y1q6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_odly2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kb4cq"]
+radius = 8.00694
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wn0n"]
+radius = 12.5919
+
+[node name="Cyclop" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 8
+gravity_scale = 0.0
+script = SubResource("GDScript_44pgm")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_i0ji3")
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kj16a")
+frame_progress = 0.401765
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4, 5)
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_kb4cq")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-2.5, 2.5)
+scale = Vector2(4.15, 4.15)
+
+[node name="HurtBox" type="Area2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(3, 3)
+collision_layer = 16
+script = ExtResource("4_nf8i1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-1.33333, 1.33333)
+scale = Vector2(0.971856, 0.906141)
+shape = SubResource("CircleShape2D_0wn0n")
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

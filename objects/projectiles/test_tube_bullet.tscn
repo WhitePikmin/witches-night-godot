@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfm0btm7betyq"]
+
+[ext_resource type="Texture2D" uid="uid://ceoa6cb4i636h" path="res://images/sprites/spr_rocket_potion-0.png" id="1_okk1u"]
+[ext_resource type="Texture2D" uid="uid://dr5562a3e5qqf" path="res://images/sprites/spr_rocket_potion-2.png" id="2_k63sx"]
+[ext_resource type="Texture2D" uid="uid://dyf86sblprbne" path="res://images/sprites/spr_rocket_potion-1.png" id="3_unjkt"]
+[ext_resource type="Texture2D" uid="uid://cnkts6pkvwc7q" path="res://images/sprites/spr_rocket_potion-3.png" id="4_c4oma"]
+
+[sub_resource type="GDScript" id="GDScript_todtd"]
+script/source = "extends Bullet;
+
+func impact():
+	Global.createObject(get_tree().root,\"res://objects/particles/bottleShatter.tscn\",global_position + Vector2(5.0,0.0));
+	Global.playSound(get_tree().root,\"res://sounds/assets/sfx/snd_glass_break.wav\",global_position);
+	destroy();
+"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6uuk7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_okk1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_k63sx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_unjkt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_c4oma")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bgdiw"]
+radius = 17.0
+height = 98.0
+
+[node name="TestTubeBullet" type="Area2D"]
+collision_layer = 8
+collision_mask = 4
+script = SubResource("GDScript_todtd")
+speed = null
+direction = null
+acceleration = null
+maxSpeed = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_6uuk7")
+frame = 2
+frame_progress = 0.360912
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(20, 0)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_bgdiw")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
