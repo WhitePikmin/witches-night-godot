@@ -17,6 +17,11 @@ const PLAYER_HP_MAX = 3;
 var Lives: int;
 const LIVES_STARTING_COUNT = 3;
 
+var respawnTimer = -100;
+const RESPAWN_TIME = 60 * 3;
+
+var railObject: Node2D;
+
 @export var starCount: int:
 	set(val):
 		starCount = val;
@@ -29,6 +34,15 @@ func _ready():
 	PlayerHP = PLAYER_HP_MAX;
 	Lives = LIVES_STARTING_COUNT;
 	current_scene = root.get_child(root.get_child_count() -1);
+
+func _process(delta):
+	var d = delta * Global.FPS_CAP;
+	if respawnTimer != -100:
+		respawnTimer -= d;
+		if respawnTimer <= 0:
+			print("Respawn player!")
+			respawnPlayer();
+			respawnTimer = -100;
 
 func createObject(root: Node,path: String,pos: Vector2):
 	var obj = loadAsset(path);
@@ -51,6 +65,10 @@ func loadAsset(path: String):
 	return loadedAssets[path];
 
 func respawnPlayer():
+	var player = createObject(railObject,"res://objects/adele.tscn",Vector2(278,517));
+	Global.PlayerHP = PLAYER_HP_MAX;
+	player.damageCooldownTimer = player.DAMAGE_COOLDOWN_TIME;
 	pass
 
-
+func startRespawnTimer():
+	respawnTimer = RESPAWN_TIME;

@@ -122,18 +122,29 @@ func shoot():
 
 func takeAHit(hpLoss: int):
 	if !takingDamage and damageCooldownTimer <= 0.0:
-		Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_hurt.wav",global_position);
 		
-		var hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_1.wav";
-		if (randi() % 2 == 0):
-			hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_2.wav";
-		
-		Global.playSound(get_tree().root,hurtSnd,global_position);
-		Global.PlayerHP -= hpLoss;
-		takingDamage = true;
-		damageCounter = DAMAGE_TIME;
-		shootingCooldown = 0.0;
-		changeSpriteFrame("hurt");
+		if Global.PlayerHP <= 1:
+			die()
+		else:
+			Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_hurt.wav",global_position);
+			
+			var hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_1.wav";
+			if (randi() % 2 == 0):
+				hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_2.wav";
+			
+			Global.playSound(get_tree().root,hurtSnd,global_position);
+			Global.PlayerHP -= hpLoss;
+			takingDamage = true;
+			damageCounter = DAMAGE_TIME;
+			shootingCooldown = 0.0;
+			changeSpriteFrame("hurt");
+
+func die():
+	Global.PlayerHP = 0;
+	Global.Lives -= 1;
+	Global.createObject(get_tree().root,"res://objects/particles/poofCloud.tscn",global_position);
+	Global.startRespawnTimer();
+	queue_free();
 
 func handleCollision():
 	var result = move_and_collide(Vector2(0,0),true,0.0,false);
