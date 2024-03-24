@@ -28,12 +28,12 @@ func _process(d):
 	var bodies: Array[Node2D] = get_overlapping_bodies();
 	
 	if pickableTimer <= 0:
-		if global_position.distance_to(Global.Player.global_position) < 200.0:
-			direction = Global.Player.global_position - global_position;
-			direction = direction.normalized();
-			speed = 17.0;
-			maxSpeed = speed;
-			pass
+		if Global.Player != null:
+			if global_position.distance_to(Global.Player.global_position) < 200.0:
+				direction = Global.Player.global_position - global_position;
+				direction = direction.normalized();
+				speed = 17.0;
+				maxSpeed = speed;
 			
 		if bodies.size() > 0:
 			if bodies[0].has_method("collect"):

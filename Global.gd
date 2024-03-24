@@ -40,7 +40,6 @@ func _process(delta):
 	if respawnTimer != -100:
 		respawnTimer -= d;
 		if respawnTimer <= 0:
-			print("Respawn player!")
 			respawnPlayer();
 			respawnTimer = -100;
 

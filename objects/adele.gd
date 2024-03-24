@@ -146,16 +146,6 @@ func die():
 	Global.startRespawnTimer();
 	queue_free();
 
-func handleCollision():
-	var result = move_and_collide(Vector2(0,0),true,0.0,false);
-	if result != null:
-		var collidedObject = result.get_collider();
-		
-		if collidedObject.get_collision_layer_value(5):
-			
-			takeAHit(collidedObject.damage);
-			collidedObject.queue_free();
-
 func changeSpriteFrame(name: String):
 	sprite.play(name,1.0,false)
 	sprite.offset = spriteOffsets[name];

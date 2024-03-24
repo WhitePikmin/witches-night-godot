@@ -185,7 +185,7 @@ position = Vector2(4787, 539)
 position = Vector2(5675, 703)
 
 [node name="Ghost" parent="Enemies" instance=ExtResource("3_tcqn0")]
-position = Vector2(2115, 544)
+position = Vector2(2833, 544)
 
 [node name="Rail" type="Node2D" parent="."]
 script = ExtResource("1_5ohgb")
@@ -266,7 +266,7 @@ position = Vector2(1839, 66)
 script = ExtResource("6_qqywd")
 
 [node name="Cyclop" parent="." instance=ExtResource("11_o0qac")]
-position = Vector2(2293, 777)
+position = Vector2(3011, 777)
 
 [node name="Fairy-Green" parent="." instance=ExtResource("12_43ux3")]
-position = Vector2(2259, 224)
+position = Vector2(2977, 224)
