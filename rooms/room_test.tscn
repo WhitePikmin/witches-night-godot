@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://bgfc3gc0cep1v"]
+[gd_scene load_steps=20 format=3 uid="uid://bgfc3gc0cep1v"]
 
 [ext_resource type="Script" path="res://scripts/Rail.gd" id="1_5ohgb"]
 [ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/adele.tscn" id="1_gn063"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/TextDrawer.gd" id="6_qqywd"]
 [ext_resource type="PackedScene" uid="uid://dos7d4s3nvf50" path="res://misc/hp_tick.tscn" id="7_84gkw"]
 [ext_resource type="Texture2D" uid="uid://cm34tnjyksr3h" path="res://images/sprites/spr_collectible_star-0.png" id="10_25gct"]
+[ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="11_1oikp"]
 [ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
 [ext_resource type="PackedScene" uid="uid://dv4xdaug7hhe2" path="res://objects/enemies/fairy-green.tscn" id="12_43ux3"]
 
@@ -117,6 +118,45 @@ func refreshTextDrawer():
 	textDrawer.display_text();
 "
 
+[sub_resource type="GDScript" id="GDScript_l1xfv"]
+script/source = "extends Node2D
+
+var livesDisplay: int;
+const OFFSET = 40 * 3;
+var display = true;
+const DISPLAY_TIME = 60 * 3;
+var displayTimer = DISPLAY_TIME;
+@onready var initialPosition = position;
+
+@onready var textDrawer = $text_drawer;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	livesDisplay = Global.Lives;
+	refreshTextDrawer();
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	displayTimer -= delta * Global.FPS_CAP;
+	if (livesDisplay != Global.Lives):
+		livesDisplay += 1;
+		displayTimer = DISPLAY_TIME;
+		position.y -= 36.0;
+		refreshTextDrawer();
+	
+	if(displayTimer <= 0):
+		position.y = move_toward(position.y,initialPosition.y - OFFSET,10.0);
+	else:
+		position.y = move_toward(position.y,initialPosition.y,10.0);
+	pass
+
+func refreshTextDrawer():
+	textDrawer.set_text(str(livesDisplay));
+	textDrawer.display_text();
+"
+
 [node name="room_test" type="Node2D"]
 script = ExtResource("1_tv6x5")
 
@@ -157,6 +197,7 @@ anchor_mode = 0
 
 [node name="Adele" parent="Rail" instance=ExtResource("1_gn063")]
 position = Vector2(278, 517)
+wall_min_slide_angle = 0.0
 
 [node name="ScreenBorders" type="StaticBody2D" parent="Rail"]
 collision_layer = 128
@@ -213,6 +254,18 @@ script = ExtResource("6_qqywd")
 position = Vector2(0, 66)
 scale = Vector2(3, 3)
 texture = ExtResource("10_25gct")
+
+[node name="Lives" type="Node2D" parent="HUD"]
+script = SubResource("GDScript_l1xfv")
+
+[node name="Sprite2D" type="Sprite2D" parent="HUD/Lives"]
+position = Vector2(1716, 72)
+scale = Vector2(3, 3)
+texture = ExtResource("11_1oikp")
+
+[node name="text_drawer" type="Node2D" parent="HUD/Lives"]
+position = Vector2(1839, 66)
+script = ExtResource("6_qqywd")
 
 [node name="Cyclop" parent="." instance=ExtResource("11_o0qac")]
 position = Vector2(2293, 777)

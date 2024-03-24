@@ -14,6 +14,9 @@ var Player: CharacterBody2D;
 var PlayerHP: int;
 const PLAYER_HP_MAX = 3;
 
+var Lives: int;
+const LIVES_STARTING_COUNT = 3;
+
 @export var starCount: int:
 	set(val):
 		starCount = val;
@@ -24,6 +27,7 @@ func _ready():
 	var root = get_tree().get_root();
 	starCount = 0;
 	PlayerHP = PLAYER_HP_MAX;
+	Lives = LIVES_STARTING_COUNT;
 	current_scene = root.get_child(root.get_child_count() -1);
 
 func createObject(root: Node,path: String,pos: Vector2):

@@ -14,7 +14,7 @@ var length = 0;
 const MAX_LENGTH = 40;
 const SIZE_GRADIENT = 5;
 const RADIUS = 25.0 / SIZE_GRADIENT;
-const SPEED = 17.0;
+const SPEED = 21.0;
 const AMPLITUDE = 120.0;
 const FREQUENCY = 0.4;
 

@@ -47,7 +47,7 @@ func _process(d):
 			for i in range(0,BULLET_COUNT):
 				var bulletInstance : Bullet = Global.createObject(get_tree().root,\"res://objects/projectiles/bullet.tscn\",global_position + Vector2(0.0,0.0));
 				var x1 = (i * BULLET_ITER) + cycle;
-				bulletInstance.setSpeed(4.0);
+				bulletInstance.setSpeed(6.0);
 				bulletInstance.setDirection(Vector2(sin(x1),cos(x1)));
 					
 				get_tree().root.add_child(bulletInstance);

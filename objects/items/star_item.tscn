@@ -28,3 +28,5 @@ sprite_frames = SubResource("SpriteFrames_nsr04")
 shape = SubResource("RectangleShape2D_nmquk")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(-224.408, 181.98)
+scale = Vector2(-24.5291, -20.0958)

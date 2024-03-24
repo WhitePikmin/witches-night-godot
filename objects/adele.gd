@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-const MAX_SPEED = 13;
+const MAX_SPEED = 16;
 const DAMAGE_TIME = 30.0;
 const SHOOT_COOLDOWN_TIME = 15.0;
 const DAMAGE_COOLDOWN_TIME = 120.0;
@@ -111,9 +111,9 @@ func shoot():
 	if shootingCooldown <= 0.0:
 			shootingCooldown = SHOOT_COOLDOWN_TIME;
 			var tubeInstance : Bullet = Global.createObject(get_tree().root,TEST_TUBE_PATH,global_position + Vector2(160.0,0.0));
-			tubeInstance.setSpeed(10.0);
-			tubeInstance.setAcceleration(1.0);
-			tubeInstance.setMaxSpeed(25.0);
+			tubeInstance.setSpeed(15.0);
+			tubeInstance.setAcceleration(1.5);
+			tubeInstance.setMaxSpeed(35.0);
 			tubeInstance.setDirection(Vector2(1.0,0.0));
 			
 			get_tree().root.add_child(tubeInstance);
