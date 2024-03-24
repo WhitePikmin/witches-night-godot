@@ -21,6 +21,9 @@ var respawnTimer = -100;
 const RESPAWN_TIME = 60 * 3;
 
 var railObject: Node2D;
+var consoleObject: CanvasLayer;
+
+var consoleHistory: Array = [];
 
 @export var starCount: int:
 	set(val):
@@ -30,6 +33,7 @@ var railObject: Node2D;
 
 func _ready():
 	var root = get_tree().get_root();
+	process_mode = Node.PROCESS_MODE_ALWAYS;
 	starCount = 0;
 	PlayerHP = PLAYER_HP_MAX;
 	Lives = LIVES_STARTING_COUNT;
@@ -42,6 +46,15 @@ func _process(delta):
 		if respawnTimer <= 0:
 			respawnPlayer();
 			respawnTimer = -100;
+	
+	if Input.is_action_just_pressed("debug_console"):
+		if ! get_tree().paused:
+			get_tree().paused = true;
+			var c = loadAsset("res://misc/debug_console.tscn");
+			consoleObject = c.instantiate();
+			get_tree().root.add_child(consoleObject);
+		else:
+			endConsole();
 
 func createObject(root: Node,path: String,pos: Vector2):
 	var obj = loadAsset(path);
@@ -71,3 +84,8 @@ func respawnPlayer():
 
 func startRespawnTimer():
 	respawnTimer = RESPAWN_TIME;
+
+func endConsole():
+	get_tree().paused = false;
+	if consoleObject != null:
+		consoleObject.queue_free();

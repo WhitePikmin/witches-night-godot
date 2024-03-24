@@ -9,6 +9,7 @@ var speed: float;
 var direction: Vector2;
 var HP: int = 3;
 var constantCounter: int = 0;
+var invincible = false;
 
 var delta: float;
 var sprite: AnimatedSprite2D;
@@ -121,9 +122,9 @@ func shoot():
 			
 
 func takeAHit(hpLoss: int):
-	if !takingDamage and damageCooldownTimer <= 0.0:
+	if !takingDamage and damageCooldownTimer <= 0.0 and !invincible:
 		
-		if Global.PlayerHP <= 1:
+		if Global.PlayerHP <= hpLoss:
 			die()
 		else:
 			Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_hurt.wav",global_position);
@@ -144,6 +145,7 @@ func die():
 	Global.Lives -= 1;
 	Global.createObject(get_tree().root,"res://objects/particles/poofCloud.tscn",global_position);
 	Global.startRespawnTimer();
+	Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_death.wav",global_position);
 	queue_free();
 
 func changeSpriteFrame(name: String):

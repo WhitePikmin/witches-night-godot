@@ -103,7 +103,6 @@ func _process(delta):
 	if (starDisplay != Global.starCount):
 		starDisplay -= sign(starDisplay - Global.starCount);
 		displayTimer = DISPLAY_TIME;
-		position.y -= 36.0;
 		refreshTextDrawer();
 	
 	if(displayTimer <= 0):
@@ -142,7 +141,6 @@ func _process(delta):
 	if (livesDisplay != Global.Lives):
 		livesDisplay -= sign(livesDisplay - Global.Lives);
 		displayTimer = DISPLAY_TIME;
-		position.y -= 36.0;
 		refreshTextDrawer();
 	
 	if(displayTimer <= 0):
@@ -224,7 +222,7 @@ shape = SubResource("RectangleShape2D_qicwi")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" type="CanvasLayer" parent="."]
-layer = 100
+layer = 99
 
 [node name="CRT_filter" type="ColorRect" parent="HUD"]
 visible = false
