@@ -47,14 +47,20 @@ func stopFlashing():
 	sprite.get_material().set_shader_parameter("strength", 0.0);
 
 func die():
-	Global.createObject(get_tree().root,"res://objects/particles/poofCloud.tscn",global_position);
-	var snd = Global.createObject(get_tree().root,"res://sounds/SoundEmitter.tscn",global_position);
+	Utils.createObject("res://objects/particles/poofCloud.tscn",position);
+	var snd = Utils.createObject("res://sounds/SoundEmitter.tscn",position);
 	snd.stream = load("res://sounds/assets/sfx/snd_poof.wav");
 	snd.play();
 	queue_free();
 
 func spawnStars(count):
 	for i in range(count):
-		var star = Global.createObject(get_tree().root,"res://objects/items/star_item.tscn",global_position);
+		var star = Utils.createObject("res://objects/items/star_item.tscn",position);
 		star.position += Vector2(randi_range(-10,10),randi_range(-10,10));
 		star.direction += Vector2(randf_range(-0.3,0.3),randf_range(-0.3,0.3));
+
+func getOnRail():
+	if get_parent() != Utils.railObject:
+		get_parent().remove_child(self);
+		position -= Utils.railObject.global_position;
+		Utils.railObject.add_child(self);

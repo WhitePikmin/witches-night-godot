@@ -29,7 +29,7 @@ func _ready():
 	
 func spawnOrbittingBullets():
 	for i in range(0,4):
-		var bullet = Global.createObject(get_tree().root,\"res://objects/projectiles/bulletGhost.tscn\",Vector2(0,0));
+		var bullet = Utils.createObject(\"res://objects/projectiles/bulletGhost.tscn\",Vector2(0,0));
 		bullet.angle = i * 90;
 		add_child(bullet);
 	pass
@@ -108,4 +108,5 @@ position = Vector2(-1.33333, 1.33333)
 scale = Vector2(0.971856, 0.906141)
 shape = SubResource("CircleShape2D_0wn0n")
 
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

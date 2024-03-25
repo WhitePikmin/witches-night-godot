@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://bgfc3gc0cep1v"]
+[gd_scene load_steps=16 format=3 uid="uid://bgfc3gc0cep1v"]
 
-[ext_resource type="Script" path="res://scripts/Rail.gd" id="1_5ohgb"]
-[ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/adele.tscn" id="1_gn063"]
 [ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_dt6l1"]
+[ext_resource type="PackedScene" uid="uid://d24qbgq6q2bj6" path="res://objects/gameObjects/rail.tscn" id="3_hm1da"]
 [ext_resource type="PackedScene" uid="uid://bpfgveta0ea65" path="res://objects/enemies/ghost.tscn" id="3_tcqn0"]
 [ext_resource type="PackedScene" uid="uid://7441yul28hfm" path="res://objects/enemies/fairy.tscn" id="5_3bq87"]
 [ext_resource type="PackedScene" uid="uid://dl1ak4eejd8tb" path="res://objects/backgrounds/back_plains.tscn" id="5_asnd3"]
@@ -12,12 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="11_1oikp"]
 [ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
 [ext_resource type="PackedScene" uid="uid://dv4xdaug7hhe2" path="res://objects/enemies/fairy-green.tscn" id="12_43ux3"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mphy4"]
-size = Vector2(32, 1080)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qicwi"]
-size = Vector2(1920, 32)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
 shader = ExtResource("2_dt6l1")
@@ -185,37 +178,7 @@ position = Vector2(5675, 703)
 [node name="Ghost" parent="Enemies" instance=ExtResource("3_tcqn0")]
 position = Vector2(2833, 544)
 
-[node name="Rail" type="Node2D" parent="."]
-script = ExtResource("1_5ohgb")
-
-[node name="Camera2D" type="Camera2D" parent="Rail"]
-anchor_mode = 0
-
-[node name="Adele" parent="Rail" instance=ExtResource("1_gn063")]
-position = Vector2(278, 517)
-wall_min_slide_angle = 0.0
-
-[node name="ScreenBorders" type="StaticBody2D" parent="Rail"]
-collision_layer = 128
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Rail/ScreenBorders"]
-position = Vector2(-16, 540)
-shape = SubResource("RectangleShape2D_mphy4")
-debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Rail/ScreenBorders"]
-position = Vector2(1936, 540)
-shape = SubResource("RectangleShape2D_mphy4")
-debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Rail/ScreenBorders"]
-position = Vector2(960, -16)
-shape = SubResource("RectangleShape2D_qicwi")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Rail/ScreenBorders"]
-position = Vector2(960, 1096)
-shape = SubResource("RectangleShape2D_qicwi")
+[node name="Rail" parent="." instance=ExtResource("3_hm1da")]
 
 [node name="BackPlains" parent="." instance=ExtResource("5_asnd3")]
 

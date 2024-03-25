@@ -25,7 +25,6 @@ func move():
 	speed += acceleration;
 	speed = minf(speed,maxSpeed);
 	translate(velocity);
-	global_position.x += (Global.SCREEN_SCROLL_SPEED * delta);
 
 func animate():
 	var spr = $AnimatedSprite2D;

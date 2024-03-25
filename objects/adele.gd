@@ -111,7 +111,7 @@ func move():
 func shoot():
 	if shootingCooldown <= 0.0:
 			shootingCooldown = SHOOT_COOLDOWN_TIME;
-			var tubeInstance : Bullet = Global.createObject(get_tree().root,TEST_TUBE_PATH,global_position + Vector2(160.0,0.0));
+			var tubeInstance : Bullet = Utils.createObject(TEST_TUBE_PATH,position + Vector2(160.0,0.0));
 			tubeInstance.setSpeed(15.0);
 			tubeInstance.setAcceleration(1.5);
 			tubeInstance.setMaxSpeed(35.0);
@@ -127,13 +127,13 @@ func takeAHit(hpLoss: int):
 		if Global.PlayerHP <= hpLoss:
 			die()
 		else:
-			Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_hurt.wav",global_position);
+			Utils.playSound("res://sounds/assets/sfx/snd_hurt.wav",position);
 			
 			var hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_1.wav";
 			if (randi() % 2 == 0):
 				hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_2.wav";
 			
-			Global.playSound(get_tree().root,hurtSnd,global_position);
+			Utils.playSound(hurtSnd,position);
 			Global.PlayerHP -= hpLoss;
 			takingDamage = true;
 			damageCounter = DAMAGE_TIME;
@@ -143,9 +143,9 @@ func takeAHit(hpLoss: int):
 func die():
 	Global.PlayerHP = 0;
 	Global.Lives -= 1;
-	Global.createObject(get_tree().root,"res://objects/particles/poofCloud.tscn",global_position);
+	Utils.createObject("res://objects/particles/poofCloud.tscn",position);
 	Global.startRespawnTimer();
-	Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_death.wav",global_position);
+	Utils.playSound("res://sounds/assets/sfx/snd_death.wav",position);
 	queue_free();
 
 func changeSpriteFrame(name: String):

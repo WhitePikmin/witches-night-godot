@@ -45,7 +45,7 @@ func _process(d):
 		shootCounter += delta;
 		if shootCounter >= SHOOT_FREQUENCY:
 			shootCounter -= SHOOT_FREQUENCY;
-			Global.createObject(get_tree().root,\"res://objects/projectiles/laser-sine.tscn\",position - Vector2(9.0,-9.0));
+			Utils.createObject(\"res://objects/projectiles/laser-sine.tscn\",position - Vector2(9.0,-9.0));
 	move();
 	
 
@@ -122,4 +122,5 @@ position = Vector2(-1.33333, 1.33333)
 scale = Vector2(0.971856, 0.906141)
 shape = SubResource("CircleShape2D_0wn0n")
 
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

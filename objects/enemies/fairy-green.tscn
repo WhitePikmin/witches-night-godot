@@ -45,7 +45,7 @@ func _process(d):
 			shootCounter -= SHOOT_FREQUENCY;
 			var cycle = ((shootIteration % 2) * (BULLET_ITER / 2)) + (BULLET_ITER / 3);
 			for i in range(0,BULLET_COUNT):
-				var bulletInstance : Bullet = Global.createObject(get_tree().root,\"res://objects/projectiles/bullet.tscn\",global_position + Vector2(0.0,0.0));
+				var bulletInstance : Bullet = Utils.createObject(\"res://objects/projectiles/bullet.tscn\",position + Vector2(0.0,0.0));
 				var x1 = (i * BULLET_ITER) + cycle;
 				bulletInstance.setSpeed(6.0);
 				bulletInstance.setDirection(Vector2(sin(x1),cos(x1)));
@@ -121,4 +121,5 @@ position = Vector2(-1.33333, 1.33333)
 scale = Vector2(0.971856, 0.906141)
 shape = SubResource("CircleShape2D_0wn0n")
 
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

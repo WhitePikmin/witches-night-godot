@@ -52,13 +52,19 @@ func executeCommand(command:String,param:String):
 				Global.Lives = l;
 		\"refill_hp\":
 			Global.PlayerHP = Global.PLAYER_HP_MAX;
-		\"toggle_invincible\":
+		\"toggle_damage\":
 			Global.Player.invincible = ! Global.Player.invincible;
+		\"set_damage\":
+			if param == \"on\":
+				Global.Player.invincible = false;
+			elif param == \"off\":
+				Global.Player.invincible = true;
 	pass
 
 func readConsole(text):
 	if text == \"\":
 		Global.consoleHistory.pop_back();
+		Global.endConsole();
 		return;
 		
 	var regex = RegEx.new();

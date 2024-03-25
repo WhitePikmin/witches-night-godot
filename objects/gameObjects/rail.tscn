@@ -1,0 +1,42 @@
+[gd_scene load_steps=5 format=3 uid="uid://d24qbgq6q2bj6"]
+
+[ext_resource type="Script" path="res://scripts/Rail.gd" id="1_ejxnk"]
+[ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/adele.tscn" id="2_fcdhj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mphy4"]
+size = Vector2(32, 1080)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qicwi"]
+size = Vector2(1920, 32)
+
+[node name="Rail" type="Node2D"]
+script = ExtResource("1_ejxnk")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="Adele" parent="." instance=ExtResource("2_fcdhj")]
+position = Vector2(278, 517)
+wall_min_slide_angle = 0.0
+
+[node name="ScreenBorders" type="StaticBody2D" parent="."]
+collision_layer = 128
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScreenBorders"]
+position = Vector2(-16, 540)
+shape = SubResource("RectangleShape2D_mphy4")
+debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="ScreenBorders"]
+position = Vector2(1936, 540)
+shape = SubResource("RectangleShape2D_mphy4")
+debug_color = Color(0.756863, 0.427451, 0.431373, 0.419608)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="ScreenBorders"]
+position = Vector2(960, -16)
+shape = SubResource("RectangleShape2D_qicwi")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="ScreenBorders"]
+position = Vector2(960, 1096)
+shape = SubResource("RectangleShape2D_qicwi")

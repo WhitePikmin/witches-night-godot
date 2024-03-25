@@ -21,7 +21,7 @@ func _ready():
 	
 func spawnOrbittingBullets():
 	for i in range(0,4):
-		var bullet = Global.createObject(get_tree().root,"res://objects/projectiles/bulletGhost.tscn",Vector2(0,0));
+		var bullet = Global.createObject("res://objects/projectiles/bulletGhost.tscn",Vector2(0,0));
 		bullet.angle = i * 90;
 		add_child(bullet);
 	pass

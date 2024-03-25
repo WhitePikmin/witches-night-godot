@@ -50,9 +50,9 @@ func _process(d):
 
 
 func getCollected():
-	Global.playSound(get_tree().root,"res://sounds/assets/sfx/snd_collectible.wav",position);
+	Utils.playSound("res://sounds/assets/sfx/snd_collectible.wav",position);
 	Global.starCount += 1;
-	Global.createObject(get_tree().root,"res://misc/collected_star.tscn",position);
+	Utils.createObject("res://misc/collected_star.tscn",position);
 	destroy();
 
 func destroy():
