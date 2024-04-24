@@ -8,7 +8,6 @@ const SCREEN_SCROLL_SPEED = 2;
 
 var current_scene = null
 
-
 var Player: CharacterBody2D;
 
 var PlayerHP: int;
@@ -22,7 +21,11 @@ const RESPAWN_TIME = 60 * 3;
 
 var consoleObject: CanvasLayer;
 
+
 var consoleHistory: Array = [];
+
+var collectedStarTarget: Vector2 = Vector2(0,0);
+var starDisplay: Node2D;
 
 @export var starCount: int:
 	set(val):

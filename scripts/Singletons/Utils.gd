@@ -36,7 +36,7 @@ func createObject(path: String,pos: Vector2, where: CreateAt = CreateAt.RAIL):
 
 
 func playSound(soundPath: String,pos: Vector2):
-	var snd = createObject("res://sounds/SoundEmitter.tscn",pos,CreateAt.ROOT);
+	var snd = createObject("res://sounds/SoundEmitter.tscn",pos + railObject.position,CreateAt.ROOT);
 	snd.stream = loadAsset(soundPath);
 	snd.play();
 	return snd;

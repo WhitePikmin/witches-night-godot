@@ -51,7 +51,8 @@ func _process(d):
 
 func getCollected():
 	Utils.playSound("res://sounds/assets/sfx/snd_collectible.wav",position);
-	Global.starCount += 1;
+	if Global.starDisplay != null:
+		Global.starDisplay.starDisplay -= 1;
 	Utils.createObject("res://misc/collected_star.tscn",position);
 	destroy();
 
