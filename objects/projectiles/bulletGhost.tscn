@@ -1,63 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://mr4wcojlhm7e"]
 
 [ext_resource type="PackedScene" uid="uid://c1qaxe47flplm" path="res://objects/particles/GhostTail.tscn" id="1_gttaj"]
+[ext_resource type="Script" path="res://objects/projectiles/bulletGhost.gd" id="1_nb4hv"]
 [ext_resource type="Texture2D" uid="uid://beu0t6j301yew" path="res://images/sprites/spr_bullet_ghost-0.png" id="2_pl4rn"]
-
-[sub_resource type="GDScript" id="GDScript_a0exf"]
-script/source = "extends MovableArea
-class_name GhostBullet
-
-var damage: int = 1;
-var angle: float = 0;
-var maxDistance: float = 3.0 * 250;
-
-var distance = 60;
-var x = 0;
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	super._ready();
-	speed = 5.0;
-	delta = 1/Global.FPS_CAP;
-	direction = direction.normalized();
-	animate();
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(d):
-	super._process(d);
-	
-	var bodies: Array[Node2D] = get_overlapping_bodies();
-	
-	if bodies.size() > 0:
-		for b in bodies:
-			if b.has_method(\"takeAHit\"):
-				b.takeAHit(damage);
-	
-	x += (d * Global.FPS_CAP) * 0.04;
-	
-	if distance >= maxDistance:
-		distance = maxDistance;
-	else:
-		distance += (d * Global.FPS_CAP);
-	move();
-
-func destroy():
-	queue_free();
-
-func move():
-	var a = x + deg_to_rad(angle);
-	position = Vector2(sin(a) * distance,cos(a) * distance);
-	
-	pass
-"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7kfpr"]
 radius = 34.2345
 
 [node name="GhostBullet" type="Area2D"]
 collision_layer = 16
-script = SubResource("GDScript_a0exf")
+script = ExtResource("1_nb4hv")
 
 [node name="ghostTail" parent="." instance=ExtResource("1_gttaj")]
 visible = false

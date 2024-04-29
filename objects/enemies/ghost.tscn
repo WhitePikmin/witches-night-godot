@@ -1,56 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://bpfgveta0ea65"]
 
+[ext_resource type="Script" path="res://objects/enemies/ghost.gd" id="1_j07xo"]
 [ext_resource type="PackedScene" uid="uid://c1qaxe47flplm" path="res://objects/particles/GhostTail.tscn" id="2_8prjx"]
 [ext_resource type="Shader" path="res://shader/flash.gdshader" id="2_m634g"]
 [ext_resource type="Texture2D" uid="uid://djuwn5o4npsgy" path="res://images/sprites/spr_ghost-0.png" id="3_2ecef"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="5_jeo7p"]
-
-[sub_resource type="GDScript" id="GDScript_hp7bb"]
-script/source = "extends Enemy
-
-const SHOOT_FREQUENCY = 60.0 * 3;
-const MID_POINT = 540;
-
-var shootCounter = 120.0;
-var x = 0;
-
-const BULLET_PATH = \"res://objects/bullet.tscn\"
-@onready var onScreenNotifier = $VisibleOnScreenNotifier2D;
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	setSprite($AnimatedSprite2D);
-	sprite.play(\"default\",1.0,false);
-	direction = Vector2(-1,-0).normalized();
-	x = PI / 2;
-	speed = 4.0;
-	HP = 15;
-	spawnOrbittingBullets();
-	
-func spawnOrbittingBullets():
-	for i in range(0,4):
-		var bullet = Utils.createObject(\"res://objects/projectiles/bulletGhost.tscn\",Vector2(0,0));
-		bullet.angle = i * 90;
-		add_child(bullet);
-	pass
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(d):
-	super._process(d);
-	
-	direction = Vector2(-1.5,sin(x)).normalized();
-	x += (d / Global.FPS_CAP) / 0.01;
-	move();
-
-
-func die():
-	spawnStars(6);
-	super();
-	
-	
-func destroy():
-	queue_free();
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
 shader = ExtResource("2_m634g")
@@ -78,7 +32,9 @@ radius = 10.3333
 collision_layer = 4
 collision_mask = 8
 gravity_scale = 0.0
-script = SubResource("GDScript_hp7bb")
+script = ExtResource("1_j07xo")
+speed = null
+direction = null
 
 [node name="ghostTail" parent="." instance=ExtResource("2_8prjx")]
 
@@ -109,4 +65,5 @@ scale = Vector2(0.971856, 0.906141)
 shape = SubResource("CircleShape2D_0wn0n")
 
 [connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="spawnOrbittingBullets"]
 [connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

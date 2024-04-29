@@ -3,7 +3,8 @@ extends Node
 
 enum CreateAt {
 	ROOT,
-	RAIL
+	RAIL,
+	NONE
 }
 
 var loadedAssets = {};
@@ -46,3 +47,15 @@ func loadAsset(path: String):
 		loadedAssets[path] = load(path);
 	
 	return loadedAssets[path];
+
+func findByClass(node: Node, result:Array):
+	if node is Enemy or node is Bullet:
+		result.push_back(node)
+	for child in node.get_children():
+		findByClass(child,result)
+
+func destroyAllEnemies():
+	var enemies = [];
+	findByClass(Global.root,enemies);
+	for e in enemies:
+		e.queue_free();

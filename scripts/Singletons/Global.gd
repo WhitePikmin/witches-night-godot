@@ -26,15 +26,16 @@ var consoleHistory: Array = [];
 
 var collectedStarTarget: Vector2 = Vector2(0,0);
 var starDisplay: Node2D;
-
+var root: Node;
 @export var starCount: int:
+
 	set(val):
 		starCount = val;
 		emit_signal("star_count_changed");
 
 
 func _ready():
-	var root = get_tree().get_root();
+	root = get_tree().get_root();
 	process_mode = Node.PROCESS_MODE_ALWAYS;
 	starCount = 0;
 	PlayerHP = PLAYER_HP_MAX;

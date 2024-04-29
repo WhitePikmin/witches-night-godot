@@ -1,74 +1,12 @@
 [gd_scene load_steps=12 format=3 uid="uid://bm8bvoftj5g3k"]
 
 [ext_resource type="Shader" path="res://shader/flash.gdshader" id="1_pnrfm"]
+[ext_resource type="Script" path="res://objects/enemies/cyclop.gd" id="1_r6so1"]
 [ext_resource type="Texture2D" uid="uid://c5un0yg7246yc" path="res://images/sprites/spr_enemy_eye_monster-3.png" id="2_3hpc6"]
 [ext_resource type="Texture2D" uid="uid://c3peuqdiiohd4" path="res://images/sprites/spr_enemy_eye_monster-2.png" id="3_4l3br"]
 [ext_resource type="Texture2D" uid="uid://dhxfnoubgvf3" path="res://images/sprites/spr_enemy_eye_monster-1.png" id="4_5y1q6"]
 [ext_resource type="Script" path="res://scripts/hurtbox.gd" id="4_nf8i1"]
 [ext_resource type="Texture2D" uid="uid://cabusxjnbcwdp" path="res://images/sprites/spr_enemy_eye_monster-0.png" id="5_odly2"]
-
-[sub_resource type="GDScript" id="GDScript_44pgm"]
-script/source = "extends Enemy
-
-const SHOOT_FREQUENCY = 60.0 * 3;
-const MID_POINT = 540;
-const BULLET_COUNT = 8;
-const BULLET_ITER = (PI / BULLET_COUNT) * 2;
-const LEAVE_AFTER = 60.0 * 8;
-
-var shootCounter = 120.0;
-var moving = true;
-var leaving = false;
-var shootIteration = 0;
-var leaveTimer = 0;
-
-
-const BULLET_PATH = \"res://objects/bullet.tscn\"
-@onready var onScreenNotifier = $VisibleOnScreenNotifier2D;
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	setSprite($AnimatedSprite2D);
-	sprite.play(\"default\",1.0,false);
-	direction = Vector2(-1.0,0.0).normalized();
-	HP = 10;
-	shootCounter = SHOOT_FREQUENCY;
-	speed = 15.0;
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(d):
-	super._process(d);
-	
-	if (leaving):
-		speed += 0.3;
-	else:
-		if (moving):
-			if (speed <= 0):
-				speed = 0;
-				moving = false;
-			else:
-				speed -= 0.5;
-		else:
-			leaveTimer += delta;
-			if(leaveTimer >= LEAVE_AFTER):
-				leaving = true;
-				direction = Vector2(-1.0,0.0).normalized();
-			shootCounter += delta;
-			if shootCounter >= SHOOT_FREQUENCY:
-				shootCounter -= SHOOT_FREQUENCY;
-				Utils.createObject(\"res://objects/projectiles/laser-sine.tscn\",position - Vector2(9.0,-9.0));
-	move();
-	
-
-
-func die():
-	spawnStars(6);
-	super();
-	
-	
-func destroy():
-	queue_free();
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
 shader = ExtResource("1_pnrfm")
@@ -105,7 +43,7 @@ radius = 12.5919
 collision_layer = 4
 collision_mask = 8
 gravity_scale = 0.0
-script = SubResource("GDScript_44pgm")
+script = ExtResource("1_r6so1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_i0ji3")

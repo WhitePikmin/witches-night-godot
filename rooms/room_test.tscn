@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bgfc3gc0cep1v"]
+[gd_scene load_steps=20 format=3 uid="uid://bgfc3gc0cep1v"]
 
 [ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_dt6l1"]
 [ext_resource type="PackedScene" uid="uid://d24qbgq6q2bj6" path="res://objects/gameObjects/rail.tscn" id="3_hm1da"]
@@ -163,36 +163,38 @@ func refreshTextDrawer():
 	textDrawer.display_text();
 "
 
+[sub_resource type="GDScript" id="GDScript_putgu"]
+script/source = "extends Node2D
+
+@export var enemiesParent: Node;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+
+
+func spawn_cutscene():
+	Utils.destroyAllEnemies();
+	pass
+"
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yhi38"]
+resource_name = "Enemies"
+scenes/1/scene = ExtResource("11_o0qac")
+scenes/2/scene = ExtResource("12_43ux3")
+scenes/3/scene = ExtResource("5_3bq87")
+scenes/4/scene = ExtResource("3_tcqn0")
+
+[sub_resource type="TileSet" id="TileSet_nag8a"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetScenesCollectionSource_yhi38")
+
 [node name="room_test" type="Node2D"]
-
-[node name="Enemies" type="Node" parent="."]
-
-[node name="Fairy7" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(2071, 66)
-
-[node name="Fairy" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(3699, 907)
-
-[node name="Fairy8" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(3715, 383)
-
-[node name="Fairy9" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(4131, 627)
-
-[node name="Fairy10" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(4255, 223)
-
-[node name="Fairy11" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(4543, 803)
-
-[node name="Fairy12" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(4787, 539)
-
-[node name="Fairy13" parent="Enemies" instance=ExtResource("5_3bq87")]
-position = Vector2(5675, 703)
-
-[node name="Ghost" parent="Enemies" instance=ExtResource("3_tcqn0")]
-position = Vector2(2833, 544)
 
 [node name="Rail" parent="." instance=ExtResource("3_hm1da")]
 
@@ -243,8 +245,16 @@ texture = ExtResource("11_1oikp")
 position = Vector2(1839, 66)
 script = ExtResource("6_qqywd")
 
-[node name="Cyclop" parent="." instance=ExtResource("11_o0qac")]
-position = Vector2(3011, 777)
+[node name="cutscene_spawner" type="Node2D" parent="."]
+position = Vector2(3184, 47)
+script = SubResource("GDScript_putgu")
 
-[node name="Fairy-Green" parent="." instance=ExtResource("12_43ux3")]
-position = Vector2(2977, 224)
+[node name="VisibleNotif" type="VisibleOnScreenNotifier2D" parent="cutscene_spawner"]
+position = Vector2(968, 0)
+
+[node name="Enemies" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_nag8a")
+format = 2
+layer_0/tile_data = PackedInt32Array(393252, 0, 131072, 720939, 0, 65536, 524337, 0, 262144)
+
+[connection signal="screen_entered" from="cutscene_spawner/VisibleNotif" to="cutscene_spawner" method="spawn_cutscene"]

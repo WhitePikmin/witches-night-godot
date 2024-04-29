@@ -1,18 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://cfm0btm7betyq"]
 
+[ext_resource type="Script" path="res://objects/projectiles/test_tube_bullet.gd" id="1_b40ob"]
 [ext_resource type="Texture2D" uid="uid://ceoa6cb4i636h" path="res://images/sprites/spr_rocket_potion-0.png" id="1_okk1u"]
 [ext_resource type="Texture2D" uid="uid://dr5562a3e5qqf" path="res://images/sprites/spr_rocket_potion-2.png" id="2_k63sx"]
 [ext_resource type="Texture2D" uid="uid://dyf86sblprbne" path="res://images/sprites/spr_rocket_potion-1.png" id="3_unjkt"]
 [ext_resource type="Texture2D" uid="uid://cnkts6pkvwc7q" path="res://images/sprites/spr_rocket_potion-3.png" id="4_c4oma"]
-
-[sub_resource type="GDScript" id="GDScript_todtd"]
-script/source = "extends Bullet;
-
-func impact():
-	Utils.createObject(\"res://objects/particles/bottleShatter.tscn\",position + Vector2(5.0,0.0));
-	Utils.playSound(\"res://sounds/assets/sfx/snd_glass_break.wav\",position);
-	destroy();
-"
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6uuk7"]
 animations = [{
@@ -41,7 +33,7 @@ height = 98.0
 [node name="TestTubeBullet" type="Area2D"]
 collision_layer = 8
 collision_mask = 4
-script = SubResource("GDScript_todtd")
+script = ExtResource("1_b40ob")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(3, 3)

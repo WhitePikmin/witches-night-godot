@@ -1,6 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://d2lncopteupbp"]
 
 [ext_resource type="Texture2D" uid="uid://cxtd83jam0w1o" path="res://images/sprites/spr_glass_shatter-0.png" id="1_4e0c6"]
+[ext_resource type="Script" path="res://objects/particles/bottleShatter.gd" id="2_3wvk2"]
 
 [sub_resource type="Gradient" id="Gradient_uf6ih"]
 offsets = PackedFloat32Array(0.779528, 1)
@@ -27,21 +28,6 @@ scale_min = 3.0
 scale_max = 3.0
 color_ramp = SubResource("GradientTexture1D_0d2hh")
 
-[sub_resource type="GDScript" id="GDScript_bjf50"]
-script/source = "extends GPUParticles2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	emitting = true;
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
-
 [node name="bottleShatter" type="GPUParticles2D"]
 emitting = false
 amount = 4
@@ -50,4 +36,4 @@ texture = ExtResource("1_4e0c6")
 lifetime = 0.7
 one_shot = true
 explosiveness = 1.0
-script = SubResource("GDScript_bjf50")
+script = ExtResource("2_3wvk2")
