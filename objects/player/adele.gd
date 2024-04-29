@@ -7,6 +7,8 @@ const DAMAGE_TIME = 30.0;
 const SHOOT_COOLDOWN_TIME = 15.0;
 const DAMAGE_COOLDOWN_TIME = 120.0;
 
+var state: PlayerState;
+
 var speed: float;
 var direction: Vector2;
 var HP: int = 3;
@@ -35,10 +37,14 @@ var spriteOffsets = {
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	state = PlayerState_Normal.new();
+	state.setup(self);
+	add_child(state);
+
 	speed = 0;
 	direction = Vector2(0,0);
 	velocity = Vector2(0,0);
-	delta = 1/Global.FPS_CAP;
+	delta = 1.0/Global.FPS_CAP;
 	sprite = $AnimatedSprite2D;
 	
 	changeSpriteFrame("default")
@@ -48,61 +54,19 @@ func _ready():
 	pass # Replace with function body.
 
 
+func changeState(newState: PlayerState):
+	remove_child(state);
+	state.queue_free();
+	newState.setup(self);
+	state = newState;
+	add_child(state);
+
 # Called every frame. 'd' is the elapsed time since the previous frame.
 func _process(d):
-	delta = d * Global.FPS_CAP;
-	clampf(delta,1.0,2.0);
-	
-	if shootingCooldown > 0.0:
-		shootingCooldown -= delta;
-		if shootingCooldown <= 0.0:
-			changeSpriteFrame("default");
-			
-	if damageCooldownTimer > 0.0:
-		sprite.visible = ((constantCounter / 3) % 2 == 0);
-		damageCooldownTimer -= delta;
-		if damageCooldownTimer <= 0.0:
-			sprite.visible = true;
-			
-	if takingDamage:
-		pass
-		direction = Vector2(-0.5,0.5);
-		speed = 12.0;
-		damageCounter -= delta;
-		if damageCounter <= 0.0:
-			takingDamage = false;
-			changeSpriteFrame("default");
-			damageCooldownTimer = DAMAGE_COOLDOWN_TIME;
-	else:
-		check_inputs();
-	
-	move();
-	
-	constantCounter += 1;
+	state.process(d);
 
 func check_inputs():
-	if Input.is_action_pressed("ui_left"):
-		direction.x = -1;
-	elif Input.is_action_pressed("ui_right"):
-		direction.x = 1;
-	else:
-		direction.x = 0;
-
-	if Input.is_action_pressed("ui_up"):
-		direction.y = -1;
-	elif Input.is_action_pressed("ui_down"):
-		direction.y = 1;
-	else:
-		direction.y = 0;
-	
-	if Input.is_action_pressed("shoot"):
-		shoot();
-	
-	if direction == Vector2(0,0):
-		speed = 0;
-	else:
-		speed = MAX_SPEED;
-		direction = direction.normalized();
+	state.check_inputs();
 
 
 func move():
@@ -124,23 +88,7 @@ func shoot():
 			
 
 func takeAHit(hpLoss: int):
-	if !takingDamage and damageCooldownTimer <= 0.0 and !invincible:
-		
-		if Global.PlayerHP <= hpLoss:
-			die()
-		else:
-			Utils.playSound("res://sounds/assets/sfx/snd_hurt.wav",position);
-			
-			var hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_1.wav";
-			if (randi() % 2 == 0):
-				hurtSnd = "res://sounds/assets/sfx/snd_adele_hurt_2.wav";
-			
-			Utils.playSound(hurtSnd,position);
-			Global.PlayerHP -= hpLoss;
-			takingDamage = true;
-			damageCounter = DAMAGE_TIME;
-			shootingCooldown = 0.0;
-			changeSpriteFrame("hurt");
+	state.takeAHit(hpLoss);
 
 func die():
 	Global.PlayerHP = 0;

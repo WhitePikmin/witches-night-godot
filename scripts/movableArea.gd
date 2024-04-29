@@ -12,7 +12,7 @@ var delta: float;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	delta = 1/Global.FPS_CAP;
+	delta = 1.0/Global.FPS_CAP;
 	pass # Replace with function body.
 
 

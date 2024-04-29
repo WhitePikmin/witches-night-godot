@@ -8,7 +8,7 @@ var damage: int = 1;
 func _ready():
 	super._ready();
 	
-	delta = 1/Global.FPS_CAP;
+	delta = 1.0/Global.FPS_CAP;
 	direction = direction.normalized();
 	visibilityNotifier = $VisibleOnScreenNotifier2D;
 	animate();

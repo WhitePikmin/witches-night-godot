@@ -9,7 +9,7 @@ var pickableTimer: float = 50.0;
 func _ready():
 	super._ready();
 	
-	delta = 1/Global.FPS_CAP;
+	delta = 1.0/Global.FPS_CAP;
 	direction = Vector2(-0.5,-1.0);
 	speed = 8.0;
 	maxSpeed = 8.0;
