@@ -105,3 +105,9 @@ func changeSpriteFrame(name: String):
 
 func collect():
 	pass
+
+func startCutscene():
+	invincible = false;
+	shootingCooldown = 0.0;
+	changeSpriteFrame("default");
+	changeState(PlayerState_Cutscene.new());

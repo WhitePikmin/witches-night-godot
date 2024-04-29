@@ -19,8 +19,6 @@ func process(d):
 		if player.damageCooldownTimer <= 0.0:
 			player.sprite.visible = true;
 			
-	
-	
 	player.check_inputs();
 	
 	player.move();
@@ -50,9 +48,6 @@ func check_inputs():
 	else:
 		player.speed = player.MAX_SPEED;
 		player.direction = player.direction.normalized();
-
-func shoot():
-	pass
 
 func takeAHit(hpLoss: int):
 	if player.damageCooldownTimer <= 0.0 and !player.invincible:

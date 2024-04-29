@@ -8,7 +8,7 @@ const SCREEN_SCROLL_SPEED = 2;
 
 var current_scene = null
 
-var Player: CharacterBody2D;
+var Player: Player;
 
 var PlayerHP: int;
 const PLAYER_HP_MAX = 3;

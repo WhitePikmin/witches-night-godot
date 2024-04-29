@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dl1ak4eejd8tb" path="res://objects/backgrounds/back_plains.tscn" id="5_asnd3"]
 [ext_resource type="Script" path="res://scripts/TextDrawer.gd" id="6_qqywd"]
 [ext_resource type="PackedScene" uid="uid://dos7d4s3nvf50" path="res://misc/hp_tick.tscn" id="7_84gkw"]
+[ext_resource type="PackedScene" uid="uid://bb1bf8ub43wtp" path="res://objects/gameObjects/cutscene_spawner.tscn" id="8_nr06e"]
 [ext_resource type="Texture2D" uid="uid://cm34tnjyksr3h" path="res://images/sprites/spr_collectible_star-0.png" id="10_25gct"]
 [ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="11_1oikp"]
 [ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
@@ -163,26 +164,6 @@ func refreshTextDrawer():
 	textDrawer.display_text();
 "
 
-[sub_resource type="GDScript" id="GDScript_putgu"]
-script/source = "extends Node2D
-
-@export var enemiesParent: Node;
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
-func spawn_cutscene():
-	Utils.destroyAllEnemies();
-	pass
-"
-
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yhi38"]
 resource_name = "Enemies"
 scenes/1/scene = ExtResource("11_o0qac")
@@ -245,16 +226,9 @@ texture = ExtResource("11_1oikp")
 position = Vector2(1839, 66)
 script = ExtResource("6_qqywd")
 
-[node name="cutscene_spawner" type="Node2D" parent="."]
-position = Vector2(3184, 47)
-script = SubResource("GDScript_putgu")
-
-[node name="VisibleNotif" type="VisibleOnScreenNotifier2D" parent="cutscene_spawner"]
-position = Vector2(968, 0)
+[node name="cutscene_spawner" parent="." instance=ExtResource("8_nr06e")]
 
 [node name="Enemies" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_nag8a")
 format = 2
 layer_0/tile_data = PackedInt32Array(393252, 0, 131072, 720939, 0, 65536, 524337, 0, 262144)
-
-[connection signal="screen_entered" from="cutscene_spawner/VisibleNotif" to="cutscene_spawner" method="spawn_cutscene"]

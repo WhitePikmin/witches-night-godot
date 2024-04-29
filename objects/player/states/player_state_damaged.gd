@@ -18,12 +18,6 @@ func process(d):
 	player.move();
 	
 	player.constantCounter += 1;
-
-func check_inputs():
-	pass
-
-func shoot():
-	pass
-
+	
 func takeAHit(hpLoss: int):
 	pass
