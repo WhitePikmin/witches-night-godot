@@ -64,7 +64,8 @@ func _process(delta):
 func respawnPlayer():
 	var player = Utils.createObject("res://objects/player/adele.tscn",Vector2(278,517));
 	Global.PlayerHP = PLAYER_HP_MAX;
-	player.damageCooldownTimer = player.DAMAGE_COOLDOWN_TIME;
+	player.changeState(PlayerState_Grace.new());
+	player.damageGraceTimer.start();
 	pass
 
 func startRespawnTimer():

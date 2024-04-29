@@ -1,0 +1,53 @@
+{
+	"dialogue": [
+		{
+			"music": "",
+			"back": "black_bg",
+			"name": "",
+			"trans_out": "fade_black",
+			"message": "Extrait d’un article de journal de: “La gazette de Portublue”"
+		},
+		{
+			"music": "lively-tavern",
+			"back": "newspaper 1",
+			"trans_in": "fade_black",
+			"trans_out": "fade_black",
+			"message": "Dans la république marchande de Lanvantin, il existe un phénomène particulier connu par les historiens du pays.\nCurieusement, il y a des évidences concrètes qu’environ à chaque 700 ans, il semble y avoir un scénario d’une envergure catastrophique qui cause l’effondrement de la société Lanvantine, dont la cause est encore inconnue."
+		},
+		{
+			"back": "newspaper 2",
+			"trans_in": "fade_black",
+			"trans_out": "fade_black",
+			"message": "La tradition orale parle du retour d’un démon puissant à tous les 700 ans, qui se venge du peuple en détruisant leurs cités avec le feu des enfers.\nTandis que les parchemins des magiciens parlent plutôt d’une invasion d’un chef militaire mythique nommé “La reine des corbeaux”, inimaginablement puissant."
+		},
+		{
+			"back": "newspaper 3",
+			"trans_in": "fade_black",
+			"message": "Mais la cause la plus probable est celle qui est aussi la plus banale:\nLes fouilles archéologiques des ruines de l’époque pointent vers une famine généralisée, causée par un mauvais climat."
+		},
+		{
+			"trans_out": "fade_black",
+			"message": "Bref, il est difficile de connaître avec exactitude notre histoire, puisque les écrits historiques fiables remontent seulement du début de notre république, il y a exactement 549 ans.\nEt non, les écrits des magiciens ne constituent aucunement de sources fiables, il n’y a pas de fondement scientifique sur l'existence d’une “reine des corbeaux”, ni d’un démon tout puissant."
+		},
+		{
+			"trans_in": "fade_black",
+			"back": "newspaper 1",
+			"message": "Certains superstitieux sont craintifs que ce cataclysme risque d’arriver de nouveaux très bientôt, même s’il n’y a pas de preuve que cela arrivera une autre fois."
+		},
+		{
+			"message": "D’après mon opinion professionnel, nous devons cesser ce dialogue alarmiste, et plutôt se pencher sur la célébration du 550ème anniversaire de notre formidable nation, qui prendra place à la 39 ème journée d’automne."
+		},
+		{
+			"trans_out": "fade_black",
+			"message": "\n\n\n\n                                                                      - Rémus, journaliste."
+		},
+		
+		
+		{
+			"music": "",
+			"back": "black_bg",
+			"trans_out": "fade_black",
+			"message": ""
+		},
+	]
+}

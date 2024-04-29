@@ -1,0 +1,9 @@
+[gd_resource type="MeshTexture" load_steps=3 format=3 uid="uid://7mvr3dupsykb"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ea765"]
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_m1fwf"]
+
+[resource]
+mesh = SubResource("ArrayMesh_m1fwf")
+base_texture = SubResource("CanvasTexture_ea765")

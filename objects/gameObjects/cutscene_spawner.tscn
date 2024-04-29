@@ -9,4 +9,8 @@ script = ExtResource("1_l1k3y")
 [node name="VisibleNotif" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2(968, 0)
 
+[node name="TryAgain_timer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="screen_entered" from="VisibleNotif" to="." method="spawn_cutscene"]
+[connection signal="timeout" from="TryAgain_timer" to="." method="spawn_cutscene"]

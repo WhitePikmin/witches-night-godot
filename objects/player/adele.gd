@@ -3,9 +3,6 @@ extends CharacterBody2D
 class_name Player
 
 const MAX_SPEED = 16;
-const DAMAGE_TIME = 30.0;
-const SHOOT_COOLDOWN_TIME = 15.0;
-const DAMAGE_COOLDOWN_TIME = 120.0;
 
 var state: PlayerState;
 
@@ -19,21 +16,19 @@ var delta: float;
 var sprite: AnimatedSprite2D;
 
 
-var shootingCooldown = 0.0;
+var shootingCooldown: bool = true;
+
+@onready var shootCooldownTimer: Timer = $ShootCooldown_timer;
+@onready var damageGraceTimer: Timer = $DamageGrace_timer;
+@onready var damagedTimer : Timer = $Damaged_timer;
 
 const TEST_TUBE_PATH = "res://objects/projectiles/test_tube_bullet.tscn";
-
-var takingDamage: bool = false;
-var damageCounter: float = 0.0;
-var damageCooldownTimer: float = 0.0;
 
 var spriteOffsets = {
 	"default": Vector2(0,0),
 	"hurt":    Vector2(0,0),
 	"shooting":Vector2(3,-0.5)
 };
-
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -75,17 +70,7 @@ func move():
 
 
 func shoot():
-	if shootingCooldown <= 0.0:
-			shootingCooldown = SHOOT_COOLDOWN_TIME;
-			var tubeInstance : Bullet = Utils.createObject(TEST_TUBE_PATH,position + Vector2(160.0,0.0));
-			tubeInstance.setSpeed(15.0);
-			tubeInstance.setAcceleration(1.5);
-			tubeInstance.setMaxSpeed(35.0);
-			tubeInstance.setDirection(Vector2(1.0,0.0));
-			
-			get_tree().root.add_child(tubeInstance);
-			changeSpriteFrame("shooting")
-			
+	state.shoot();
 
 func takeAHit(hpLoss: int):
 	state.takeAHit(hpLoss);
@@ -108,6 +93,16 @@ func collect():
 
 func startCutscene():
 	invincible = false;
-	shootingCooldown = 0.0;
+	sprite.visible = true;
+	shootingCooldown = true;
 	changeSpriteFrame("default");
 	changeState(PlayerState_Cutscene.new());
+
+func shotCoolDown():
+	state.shotCoolDown();
+
+func unDamage():
+	state.unDamage();
+
+func removeGracePeriod():
+	state.removeGracePeriod();

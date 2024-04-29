@@ -9,11 +9,6 @@ func process(d):
 
 	player.direction = Vector2(-0.5,0.5);
 	player.speed = 12.0;
-	player.damageCounter -= player.delta;
-	if player.damageCounter <= 0.0:
-		player.changeSpriteFrame("default");
-		player.damageCooldownTimer = player.DAMAGE_COOLDOWN_TIME;
-		player.changeState(PlayerState_Normal.new());
 	
 	player.move();
 	
@@ -21,3 +16,8 @@ func process(d):
 	
 func takeAHit(hpLoss: int):
 	pass
+
+func unDamage():
+	player.changeSpriteFrame("default");
+	player.changeState(PlayerState_Grace.new());
+	player.damageGraceTimer.start();

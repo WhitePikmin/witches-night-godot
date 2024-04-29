@@ -8,17 +8,6 @@ func process(d):
 	player.delta = d * Global.FPS_CAP;
 	clampf(player.delta,1.0,2.0);
 	
-	if player.shootingCooldown > 0.0:
-		player.shootingCooldown -= player.delta;
-		if player.shootingCooldown <= 0.0:
-			player.changeSpriteFrame("default");
-			
-	if player.damageCooldownTimer > 0.0:
-		player.sprite.visible = ((player.constantCounter / 3) % 2 == 0);
-		player.damageCooldownTimer -= player.delta;
-		if player.damageCooldownTimer <= 0.0:
-			player.sprite.visible = true;
-			
 	player.check_inputs();
 	
 	player.move();
@@ -50,7 +39,7 @@ func check_inputs():
 		player.direction = player.direction.normalized();
 
 func takeAHit(hpLoss: int):
-	if player.damageCooldownTimer <= 0.0 and !player.invincible:
+	if !player.invincible:
 		
 		if Global.PlayerHP <= hpLoss:
 			player.die()
@@ -63,7 +52,6 @@ func takeAHit(hpLoss: int):
 			
 			Utils.playSound(hurtSnd,player.position);
 			Global.PlayerHP -= hpLoss;
-			player.damageCounter = player.DAMAGE_TIME;
-			player.shootingCooldown = 0.0;
 			player.changeSpriteFrame("hurt");
 			player.changeState(PlayerState_Damaged.new());
+			player.damagedTimer.start();

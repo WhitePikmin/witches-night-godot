@@ -1,0 +1,28 @@
+{
+	"dialogue": [
+		{
+			"back": "black_bg",
+			"name": "",
+			"message": "Our story begins with this..."
+		},
+		{
+			"music": "lively-tavern",
+			"back": "shop_bg",
+			"name": "Adele",
+			"left_char": "adele/neutral",
+			"right_char": "charlotte/neutral",
+			"speaker": "left",
+			"message": "Hi Charlotte!"
+		},
+		{
+			"name": "Charlotte",
+			"speaker": "right",
+			"message": "Shut the fuck up Adele."
+		},
+		{
+			"speaker":"",
+			"name":"",
+			"message":"The end :)"
+		}
+	]
+}

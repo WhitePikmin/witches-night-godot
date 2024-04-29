@@ -130,3 +130,19 @@ frame_progress = 0.93212
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32, 3)
 shape = SubResource("CircleShape2D_sij80")
+
+[node name="ShootCooldown_timer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="DamageGrace_timer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Damaged_timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="ShootCooldown_timer" to="." method="shotCoolDown"]
+[connection signal="timeout" from="DamageGrace_timer" to="." method="removeGracePeriod"]
+[connection signal="timeout" from="Damaged_timer" to="." method="unDamage"]

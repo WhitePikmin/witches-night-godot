@@ -1,0 +1,118 @@
+{
+	"dialogue": [
+		{
+			"music": "lively-tavern",
+			"back": "town_1_bg",
+			"name": "",
+			"right_char": "adele/neutral",
+			"message": "It's the morning, the sun rose half an hour ago, Adele is outside her house setting up a cart full of potion supplies and merchandise. She's attaching the cart to her floating broomstick"
+		},
+		{
+			"name": "Nix",
+			"left_char": "nix/neutral",
+			"speaker": "left",
+			"message": "Hoi! Need any help?"
+		},
+		{
+			"name": "",
+			"message": "A familiar voice calls out from down the path.  It was Nix! The cursemaker in her fleshy human self - not a fuzzy curse-lemur thing, or anything like that!"
+		},
+		{
+			"name": "Nix",
+			"message": "Never did learn how to pilot a broom, but I can at least help you get stuff set up!"
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "Oh thanks Nix, I only have one bag left, next to the door"
+		},
+		{
+			"name": "Nix",
+			"speaker": "left",
+			"message": "So what are these potions, huh? Nothing volatile, or something I need to worry about splashing on me, right? I don't wanna turn into a doormat, or something."
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "Oh don't worry, it's just regular stuff for adventurers, potions of healing, strength... that kind of stuff"
+		},
+		{
+			"name": "Nix",
+			"speaker": "left",
+			"message": "That so, huh..?"
+		},
+		{
+			"name": "",
+			"message": "The cursemaker snickered, taking one of those potions, swishing the liquid around inside. She wondered if she could taint one of those potions of strength. Maybe cause unwanted physical changes?"
+		},
+		{
+			"name": "",
+			"message": "...Nah, she didn't want to mess with Adele's merch - she seemed to get upset if Nix drank 'em; she wouldn't appreciate the cursemaker spiking them with hexes.. "
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "I'm going to the town of Trifort, it's close to the border, and apparently they're hiring a lot of adventurers right now, so I smell opportunity"
+		},
+		{
+			"name": "Nix",
+			"speaker": "left",
+			"message": "...Eh? Trifort? I've heard of that place, but never been there myself.. Hiring adventurers, huh..? You think they'd take you? Your potions are good, but you never really seemed like the dungeon delving type.. More of a... merchant NPC, y'know?"
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "Well... you're kinda right..."
+		},
+		{
+			"name":"",
+			"message":"she blushes in embarrassment, as she remember the last time the duo where stuck in a dungeon"
+		},
+		{
+			"speaker":"",
+			"name":"",
+			"message":"Nix flushed a light pink at that - wholly blamed Adele for that loss!"
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "So, wanna come with?"
+		},
+		{
+			"speaker":"left",
+			"name":"Nix",
+			"message":"Sure, I don't have anything better to do.."
+		},
+		{
+			"speaker":"left",
+			"name":"",
+			"message":"The cursemaker gave a light shrug of her shoulders"
+		},
+		{
+			"speaker":"left",
+			"name":"Nix",
+			"message":"...Do I ride on the back of your broom? Can it carry us both? Probably struggles to carry you!"
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "Sh-shut up! It can carry me easily!"
+		},
+		{
+			"speaker":"right",
+			"name":"",
+			"message":"Adele looks at the cart"
+		},
+		{
+			"name": "Adele",
+			"speaker": "right",
+			"message": "But it can barely carry the cart, we'll have to walk alongside it..."
+		},
+		
+		{
+			"speaker":"",
+			"name":"",
+			"message":"To be continued!"
+		}
+	]
+}
