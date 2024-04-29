@@ -1,6 +1,6 @@
 [gd_scene load_steps=26 format=3 uid="uid://xr5vi16elmg7"]
 
-[ext_resource type="Script" path="res://objects/adele.gd" id="1_sfrav"]
+[ext_resource type="Script" path="res://objects/player/adele.gd" id="1_sfrav"]
 [ext_resource type="Texture2D" uid="uid://dy1x64fjtvpk7" path="res://images/sprites/spr_adele-7.png" id="2_11cl8"]
 [ext_resource type="Texture2D" uid="uid://b0jk2j28cddiq" path="res://images/sprites/spr_adele-0.png" id="3_eek57"]
 [ext_resource type="Texture2D" uid="uid://dlij7pgkspcy4" path="res://images/sprites/spr_adele-12.png" id="4_i6fhf"]

@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 const MAX_SPEED = 16;
 const DAMAGE_TIME = 30.0;
 const SHOOT_COOLDOWN_TIME = 15.0;

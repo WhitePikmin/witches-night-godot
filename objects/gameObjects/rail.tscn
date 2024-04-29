@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://d24qbgq6q2bj6"]
 
 [ext_resource type="Script" path="res://scripts/Rail.gd" id="1_ejxnk"]
-[ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/adele.tscn" id="2_fcdhj"]
+[ext_resource type="PackedScene" uid="uid://xr5vi16elmg7" path="res://objects/player/adele.tscn" id="2_fcdhj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mphy4"]
 size = Vector2(32, 1080)
