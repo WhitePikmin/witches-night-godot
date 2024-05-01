@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dhm601nr81egd"
-path="res://.godot/imported/neutral.png-01bb89e731cba3b8485fb0aafb86917e.ctex"
+path="res://.godot/imported/neutral.png-2665b36c3c2131aaf74a186a8fc31032.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://cutscene/charlotte/neutral.png"
-dest_files=["res://.godot/imported/neutral.png-01bb89e731cba3b8485fb0aafb86917e.ctex"]
+source_file="res://cutscene/characters/charlotte/neutral.png"
+dest_files=["res://.godot/imported/neutral.png-2665b36c3c2131aaf74a186a8fc31032.ctex"]
 
 [params]
 

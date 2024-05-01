@@ -59,3 +59,10 @@ func destroyAllEnemies():
 	findByClass(Global.root,enemies);
 	for e in enemies:
 		e.queue_free();
+
+func destroyFamily(instance: Node):
+	if instance != null:
+		var children: Array = instance.get_children();
+		for c in children:
+			destroyFamily(c);
+		instance.queue_free();

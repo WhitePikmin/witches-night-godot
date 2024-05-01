@@ -22,6 +22,8 @@ var shootingCooldown: bool = true;
 @onready var damageGraceTimer: Timer = $DamageGrace_timer;
 @onready var damagedTimer : Timer = $Damaged_timer;
 
+@onready var HUDLayer = $HUD;
+
 const TEST_TUBE_PATH = "res://objects/projectiles/test_tube_bullet.tscn";
 
 var spriteOffsets = {
@@ -92,11 +94,7 @@ func collect():
 	pass
 
 func startCutscene():
-	invincible = false;
-	sprite.visible = true;
-	shootingCooldown = true;
-	changeSpriteFrame("default");
-	changeState(PlayerState_Cutscene.new());
+	state.startCutscene();
 
 func shotCoolDown():
 	state.shotCoolDown();

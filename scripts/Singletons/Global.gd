@@ -27,8 +27,9 @@ var consoleHistory: Array = [];
 var collectedStarTarget: Vector2 = Vector2(0,0);
 var starDisplay: Node2D;
 var root: Node;
-@export var starCount: int:
+@onready var HUD: CanvasLayer = $HUD;
 
+@export var starCount: int:	
 	set(val):
 		starCount = val;
 		emit_signal("star_count_changed");
@@ -75,3 +76,14 @@ func endConsole():
 	get_tree().paused = false;
 	if consoleObject != null:
 		consoleObject.queue_free();
+
+func startCustcene(HudLayer:CanvasLayer):
+	var obj = preload("res://cutscene/cutscene_layer.tscn");
+	var instance = obj.instantiate();
+	get_tree().root.add_child(instance);
+	HUD.visible = false;
+	
+
+func endCutscene():
+	Global.Player.changeState(PlayerState_Normal.new());
+	HUD.visible = true;

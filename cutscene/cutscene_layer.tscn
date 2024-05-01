@@ -1,0 +1,99 @@
+[gd_scene load_steps=13 format=3 uid="uid://cm52xyyajhele"]
+
+[ext_resource type="Texture2D" uid="uid://bvvp021etelxj" path="res://cutscene/characters/adele/neutral.png" id="1_m8lul"]
+[ext_resource type="Script" path="res://cutscene/code/character.gd" id="2_8enqi"]
+[ext_resource type="Script" path="res://cutscene/code/right_character.gd" id="3_korw3"]
+[ext_resource type="Script" path="res://cutscene/code/fader.gd" id="4_p83dx"]
+[ext_resource type="Theme" uid="uid://bup8a4v8mo50w" path="res://cutscene/themes/mainTheme.tres" id="5_i4fql"]
+[ext_resource type="Theme" uid="uid://c3r8157wdircy" path="res://cutscene/themes/nameTheme.tres" id="6_mmo5f"]
+[ext_resource type="StyleBox" uid="uid://cqbaabf8kw46l" path="res://cutscene/themes/styles/boxNameStyle_dark.tres" id="7_wov4h"]
+[ext_resource type="Script" path="res://cutscene/code/dialogueBox.gd" id="8_v7880"]
+[ext_resource type="Script" path="res://cutscene/code/dialogueText.gd" id="9_4lv71"]
+[ext_resource type="Texture2D" uid="uid://mooamwvbdewu" path="res://cutscene/star_cursor.png" id="10_rhmje"]
+[ext_resource type="Script" path="res://cutscene/code/StarCursor.gd" id="11_pj55m"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_v87yk"]
+
+[node name="CutsceneLayer" type="CanvasLayer"]
+
+[node name="stage" type="Node2D" parent="."]
+
+[node name="background" type="Sprite2D" parent="stage"]
+centered = false
+
+[node name="left_char" type="Sprite2D" parent="stage"]
+position = Vector2(840, 0)
+scale = Vector2(-1, 1)
+texture = ExtResource("1_m8lul")
+centered = false
+script = ExtResource("2_8enqi")
+
+[node name="right_char" type="Sprite2D" parent="stage"]
+position = Vector2(1080, 0)
+texture = ExtResource("1_m8lul")
+centered = false
+script = ExtResource("3_korw3")
+
+[node name="musicPlayer" type="AudioStreamPlayer" parent="stage"]
+
+[node name="fader" type="Polygon2D" parent="stage"]
+color = Color(0, 0, 0, 0)
+texture = SubResource("CanvasTexture_v87yk")
+polygon = PackedVector2Array(0, 0, 1920, 0, 1920, 1080, 0, 1080)
+script = ExtResource("4_p83dx")
+
+[node name="dialogueSystem" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = ExtResource("5_i4fql")
+
+[node name="boxNameContainer" type="PanelContainer" parent="dialogueSystem"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 551.0
+offset_right = 545.0
+offset_bottom = 625.0
+theme = ExtResource("6_mmo5f")
+
+[node name="boxName" type="Panel" parent="dialogueSystem/boxNameContainer"]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("7_wov4h")
+
+[node name="nameText" type="RichTextLabel" parent="dialogueSystem/boxNameContainer"]
+layout_mode = 2
+theme_override_colors/default_color = Color(0.803922, 0.803922, 0.235294, 1)
+text = "Name"
+fit_content = true
+
+[node name="dialogueContainer" type="PanelContainer" parent="dialogueSystem"]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 665.0
+offset_right = 1875.0
+offset_bottom = 1025.0
+
+[node name="dialogueBox" type="Panel" parent="dialogueSystem/dialogueContainer"]
+layout_mode = 2
+script = ExtResource("8_v7880")
+
+[node name="dialogueText" type="RichTextLabel" parent="dialogueSystem/dialogueContainer"]
+layout_mode = 2
+text = "Sample Text"
+fit_content = true
+script = ExtResource("9_4lv71")
+
+[node name="StarCursor" type="Sprite2D" parent="dialogueSystem/dialogueContainer"]
+position = Vector2(939, 362)
+scale = Vector2(1.68, 1.68)
+texture = ExtResource("10_rhmje")
+script = ExtResource("11_pj55m")
+
+[node name="FadeOutTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[connection signal="timeout" from="FadeOutTimer" to="dialogueSystem/dialogueContainer/dialogueText" method="endCutscene"]

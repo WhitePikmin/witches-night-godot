@@ -13,3 +13,6 @@ func process(d):
 	player.position.y = move_toward(player.position.y,TARGET.y,player.MAX_SPEED * player.delta);
 	
 	player.constantCounter += 1;
+
+func startCutscene():
+	pass	

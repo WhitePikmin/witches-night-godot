@@ -42,7 +42,7 @@ func setImage(path:String):
 	if(path == ""):
 		visible = false
 	else:
-		texture = load("res://images/characters/" + path + ".png")
+		texture = load("res://cutscene/characters/" + path + ".png");
 		visible = true
 	
 func startSpeaking():

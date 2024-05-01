@@ -50,6 +50,9 @@ func executeCommand(command:String,param:String):
 				Global.Player.invincible = false;
 			elif param == "off":
 				Global.Player.invincible = true;
+		"start_cutscene":
+			Utils.destroyAllEnemies();
+			Global.Player.startCutscene();
 	pass
 
 func readConsole(text):

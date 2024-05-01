@@ -39,3 +39,11 @@ func unDamage():
 
 func removeGracePeriod():
 	pass
+	
+func startCutscene():
+	player.invincible = false;
+	player.sprite.visible = true;
+	player.shootingCooldown = true;
+	player.changeSpriteFrame("default");
+	player.changeState(PlayerState_Cutscene.new());
+	Global.startCustcene(player.HUDLayer);

@@ -4,7 +4,11 @@ var textRate = 1
 var textTimer = 0
 var run = true
 
-var dataFile = 'res://script/prologue_1.json'
+@onready var parent: CanvasLayer = $"../../..";
+@onready var modulator: CanvasModulate = $"../../../CanvasModulate";
+@onready var fadeOutTimer: Timer = $"../../../FadeOutTimer";
+
+var dataFile = "res://cutscene/script/testAct.json"
 var nameText : RichTextLabel
 var textPanel
 var nameContainer
@@ -52,39 +56,42 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if not transitionning:
-		if Input.is_action_just_pressed("ui_accept"):
-			if visible_characters >= text.length():
-				
-				if 'trans_out' in parData.keys():
-					if parData['trans_out'] == 'fade_black':
-						fader.fadeInBlack()
-						
-					transitionning = true
-					trans_to_next = true
-					dialogueSystem.visible = false
+	if fadeOutTimer.is_stopped():
+		if not transitionning:
+			if Input.is_action_just_pressed("shoot"):
+				if visible_characters >= text.length():
+					
+					if 'trans_out' in parData.keys():
+						if parData['trans_out'] == 'fade_black':
+							fader.fadeInBlack()
+							
+						transitionning = true
+						trans_to_next = true
+						dialogueSystem.visible = false
+					else:
+						_showNextParagraph()
 				else:
-					_showNextParagraph()
-			else:
-				visible_characters = text.length()
-		
-		if visible_characters >= text.length():
-			starCursor.visible = true
-		
-		if run:
-			textTimer += 1
+					visible_characters = text.length()
 			
-			while textTimer >= textRate:
-				textTimer -= textRate
-				visible_characters += 1
+			if visible_characters >= text.length():
+				starCursor.visible = true
+			
+			if run:
+				textTimer += 1
+				
+				while textTimer >= textRate:
+					textTimer -= textRate
+					visible_characters += 1
+		else:
+			if fader.finishedTransition():
+				if trans_to_next:
+					_showNextParagraph()
+					trans_to_next = false
+				else:
+					transitionning = false
+					dialogueSystem.visible = true
 	else:
-		if fader.finishedTransition():
-			if trans_to_next:
-				_showNextParagraph()
-				trans_to_next = false
-			else:
-				transitionning = false
-				dialogueSystem.visible = true
+		modulator.color = Color(1.0,1.0,1.0,fadeOutTimer.time_left / fadeOutTimer.wait_time);
 
 func _showNextParagraph():
 	if paragraphIndex < data['dialogue'].size():
@@ -110,8 +117,8 @@ func _showNextParagraph():
 			if parData['trans_in'] == 'fade_black':
 				fader.fadeOutBlack()
 
-		if 'back' in parVals:
-				background.texture = load("res://images/backgrounds/" + parData['back'] + ".png")
+		#if 'back' in parVals:
+		#		background.texture = load("res://images/backgrounds/" + parData['back'] + ".png")
 		
 		if 'speaker' in parVals:
 			if parData['speaker'] == "left":
@@ -124,14 +131,16 @@ func _showNextParagraph():
 				leftChar.stopSpeaking()
 				rightChar.stopSpeaking()
 		
-		if 'music' in parVals:
-			if parData['music'] == "":
-				musicPlayer.stopMusic()
-			else:
-				musicPlayer.setMusicPath("res://audio/music/" + parData['music'] + ".mp3")
-				musicPlayer.playMusic()
+		#if 'music' in parVals:
+		#	if parData['music'] == "":
+		#		musicPlayer.stopMusic()
+		#	else:
+		#		musicPlayer.setMusicPath("res://audio/music/" + parData['music'] + ".mp3")
+		#		musicPlayer.playMusic()
 		
 		paragraphIndex += 1
+	else:
+		fadeOutTimer.start();
 
 
 func _setupName(name):
@@ -144,3 +153,12 @@ func _setupName(name):
 		nameContainer.visible = true
 		textPanel.roundLeftCorner(false)
 		pass
+
+func fadeOut():
+	fadeOutTimer.start();
+	pass
+
+func endCutscene():
+	Global.endCutscene();
+	Utils.destroyFamily(parent);
+	pass
