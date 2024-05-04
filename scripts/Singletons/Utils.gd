@@ -35,6 +35,13 @@ func createObject(path: String,pos: Vector2, where: CreateAt = CreateAt.RAIL):
 		
 	return instance;
 
+func createBoss(path:String):
+	var obj = loadAsset(path);
+	var instance : Boss = obj.instantiate();
+	get_tree().root.add_child(instance);
+	instance.position = Vector2(railObject.position.x + 1920 + 50, 1080 / 2);
+	instance.set_process(true);
+	Global.Boss = instance;
 
 func playSound(soundPath: String,pos: Vector2):
 	var snd = createObject("res://sounds/SoundEmitter.tscn",pos + railObject.position,CreateAt.ROOT);

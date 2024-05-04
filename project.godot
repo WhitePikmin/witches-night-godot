@@ -40,6 +40,7 @@ version_control/autoload_on_startup=true
 [file_customization]
 
 folder_colors={
+"res://cutscene/": "orange",
 "res://images/": "red",
 "res://misc/": "gray",
 "res://objects/": "blue",

@@ -9,6 +9,7 @@ const SCREEN_SCROLL_SPEED = 2;
 var current_scene = null
 
 var Player: Player;
+var Boss: Boss;
 
 var PlayerHP: int;
 const PLAYER_HP_MAX = 3;
@@ -20,6 +21,9 @@ var respawnTimer = -100;
 const RESPAWN_TIME = 60 * 3;
 
 var consoleObject: CanvasLayer;
+var moveBg = true;
+
+var background: Background;
 
 
 var consoleHistory: Array = [];
@@ -43,6 +47,8 @@ func _ready():
 	Lives = LIVES_STARTING_COUNT;
 	current_scene = root.get_child(root.get_child_count() -1);
 
+
+
 func _process(delta):
 	if ! Engine.is_editor_hint():
 		var d = delta * Global.FPS_CAP;
@@ -61,6 +67,17 @@ func _process(delta):
 			else:
 				consoleHistory.pop_back();
 				endConsole();
+		
+		moveRails(delta);
+
+func moveRails(d):
+	if (Utils.railObject != null):
+		var delta = Global.FPS_CAP * d;
+		var deltaX = SCREEN_SCROLL_SPEED * delta;
+		if (moveBg):
+			Utils.railObject.position.x += deltaX;
+		else :
+			background.moveBg(Vector2(-deltaX,0.0));
 
 func respawnPlayer():
 	var player = Utils.createObject("res://objects/player/adele.tscn",Vector2(278,517));
@@ -82,8 +99,11 @@ func startCustcene(HudLayer:CanvasLayer):
 	var instance = obj.instantiate();
 	get_tree().root.add_child(instance);
 	HUD.visible = false;
+	moveBg = false;
 	
 
 func endCutscene():
 	Global.Player.changeState(PlayerState_Normal.new());
+	if(Global.Boss != null):
+		Global.Boss.startHostility();
 	HUD.visible = true;

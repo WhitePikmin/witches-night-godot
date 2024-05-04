@@ -1,0 +1,155 @@
+[gd_scene load_steps=27 format=3 uid="uid://dexhjxxw7wrye"]
+
+[ext_resource type="Script" path="res://objects/bosses/charlotte/charlotte.gd" id="1_d1iis"]
+[ext_resource type="Shader" path="res://shader/flash.gdshader" id="2_5c6o3"]
+[ext_resource type="Texture2D" uid="uid://bh545uw1tuec8" path="res://images/sprites/spr_charlotte_attacking-1.png" id="3_beoq1"]
+[ext_resource type="Texture2D" uid="uid://buxqcy681mpfg" path="res://images/sprites/spr_charlotte_attacking-4.png" id="4_l65u3"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="5_87rby"]
+[ext_resource type="Texture2D" uid="uid://c72ep57t5euk4" path="res://images/sprites/spr_charlotte_attacking-3.png" id="5_r2uq1"]
+[ext_resource type="Texture2D" uid="uid://bqkbe1ducdgo" path="res://images/sprites/spr_charlotte_attacking-0.png" id="6_5useb"]
+[ext_resource type="Texture2D" uid="uid://mmafbhttx2f6" path="res://images/sprites/spr_charlotte_attacking-2.png" id="7_mjugx"]
+[ext_resource type="Texture2D" uid="uid://cwjunuh6i1n16" path="res://images/sprites/spr_charlotte_charge-1.png" id="8_6dk8a"]
+[ext_resource type="Texture2D" uid="uid://b5d7jurk775ur" path="res://images/sprites/spr_charlotte_charge-2.png" id="9_6h74x"]
+[ext_resource type="Texture2D" uid="uid://dmpknf7hv5bn0" path="res://images/sprites/spr_charlotte_charge-0.png" id="10_vblgm"]
+[ext_resource type="Texture2D" uid="uid://b1xya1eraw2h0" path="res://images/sprites/spr_charlotte_charge-3.png" id="11_1yjcx"]
+[ext_resource type="Texture2D" uid="uid://uv6gnt0pm42j" path="res://images/sprites/spr_charlotte_charge-4.png" id="12_l7odo"]
+[ext_resource type="Texture2D" uid="uid://cxwskkhic360c" path="res://images/sprites/spr_charlottte_fly_away-0.png" id="13_w60bi"]
+[ext_resource type="Texture2D" uid="uid://cp403tb70uqvk" path="res://images/sprites/spr_charlottte_fly_away-2.png" id="14_rq4yf"]
+[ext_resource type="Texture2D" uid="uid://babcpverlhlya" path="res://images/sprites/spr_charlottte_fly_away-3.png" id="15_lmftn"]
+[ext_resource type="Texture2D" uid="uid://xpxm0qraxtcu" path="res://images/sprites/spr_charlottte_fly_away-4.png" id="16_qiwoj"]
+[ext_resource type="Texture2D" uid="uid://cpytdipotyshm" path="res://images/sprites/spr_charlottte_fly_away-1.png" id="17_yln4t"]
+[ext_resource type="Texture2D" uid="uid://ctyhthrj0l5dp" path="res://images/sprites/spr_charlotte_idle-0.png" id="18_rwxqq"]
+[ext_resource type="Texture2D" uid="uid://dvu078k0g4lx6" path="res://images/sprites/spr_charlotte_idle-1.png" id="19_genfe"]
+[ext_resource type="Texture2D" uid="uid://dkkvliaefond2" path="res://images/sprites/spr_charlotte_idle-3.png" id="20_6lmv7"]
+[ext_resource type="Texture2D" uid="uid://qt1hohbnb8ya" path="res://images/sprites/spr_charlotte_idle-2.png" id="21_rhn1a"]
+[ext_resource type="Texture2D" uid="uid://353f1ht3oywt" path="res://images/sprites/spr_charlotte_idle-4.png" id="22_rr8yj"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
+shader = ExtResource("2_5c6o3")
+shader_parameter/white = Vector3(1, 1, 1)
+shader_parameter/strength = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kj16a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_beoq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_l65u3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_r2uq1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_5useb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_mjugx")
+}],
+"loop": true,
+"name": &"attacking",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_6dk8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_6h74x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_vblgm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_1yjcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_l7odo")
+}],
+"loop": true,
+"name": &"charge",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_rwxqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_genfe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_6lmv7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_rhn1a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_rr8yj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("13_w60bi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_rq4yf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_lmftn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_qiwoj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_yln4t")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 10.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0l8nv"]
+radius = 41.0
+height = 304.667
+
+[node name="Charlotte" type="RigidBody2D"]
+collision_layer = 20
+collision_mask = 8
+gravity_scale = 0.0
+script = ExtResource("1_d1iis")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_i0ji3")
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kj16a")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-7, 2)
+shape = SubResource("CapsuleShape2D_0l8nv")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(5.5, 2.49998)
+scale = Vector2(10.15, 17.85)
+
+[node name="HurtBox" type="Area2D" parent="."]
+position = Vector2(0, 2)
+scale = Vector2(3.5, 3.1)
+collision_layer = 16
+script = ExtResource("5_87rby")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(-2, 0.555556)
+scale = Vector2(0.333333, 0.333333)
+shape = SubResource("CapsuleShape2D_0l8nv")
+debug_color = Color(0.670416, 0.464879, 0.56224, 0.42)
+
+[node name="PositionTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]
+[connection signal="timeout" from="PositionTimer" to="." method="incrementPosition"]

@@ -7,7 +7,7 @@ position = Vector2(3184, 47)
 script = ExtResource("1_l1k3y")
 
 [node name="VisibleNotif" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(968, 0)
+position = Vector2(20, 0)
 
 [node name="TryAgain_timer" type="Timer" parent="."]
 one_shot = true

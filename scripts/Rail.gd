@@ -9,5 +9,4 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(d):
-	var delta = Global.FPS_CAP * d;
-	position.x += Global.SCREEN_SCROLL_SPEED * delta;
+	pass

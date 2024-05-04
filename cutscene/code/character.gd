@@ -6,7 +6,8 @@ var X_OFFSET     = -64
 var Y_OFFSET     = 64
 var COLOR_OFFSET = 0.5
 
-var MARGIN = 16
+var MARGIN = -80
+const VERTICAL_POS = 350
 
 var speaking
 var targetPos
@@ -16,7 +17,6 @@ var speed = 5
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_init()
-	scale.x = -1
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -36,7 +36,7 @@ func _init():
 
 func _setdefaultPos():
 	var width = texture.get_width()
-	defaultPos = Vector2(MARGIN + width,0)
+	defaultPos = Vector2(MARGIN + width,VERTICAL_POS)
 
 func setImage(path:String):
 	if(path == ""):

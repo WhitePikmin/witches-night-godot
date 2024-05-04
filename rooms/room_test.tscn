@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://bgfc3gc0cep1v"]
+[gd_scene load_steps=22 format=3 uid="uid://bgfc3gc0cep1v"]
 
 [ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_dt6l1"]
 [ext_resource type="Script" path="res://rooms/HUD.gd" id="3_4kqok"]
@@ -13,6 +13,7 @@
 [ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="11_1oikp"]
 [ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
 [ext_resource type="PackedScene" uid="uid://dv4xdaug7hhe2" path="res://objects/enemies/fairy-green.tscn" id="12_43ux3"]
+[ext_resource type="PackedScene" uid="uid://dexhjxxw7wrye" path="res://objects/bosses/charlotte/charlotte.tscn" id="14_eodh8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
 shader = ExtResource("2_dt6l1")
@@ -171,6 +172,7 @@ scenes/1/scene = ExtResource("11_o0qac")
 scenes/2/scene = ExtResource("12_43ux3")
 scenes/3/scene = ExtResource("5_3bq87")
 scenes/4/scene = ExtResource("3_tcqn0")
+scenes/5/scene = ExtResource("14_eodh8")
 
 [sub_resource type="TileSet" id="TileSet_nag8a"]
 tile_size = Vector2i(64, 64)
@@ -229,8 +231,8 @@ position = Vector2(1839, 66)
 script = ExtResource("6_qqywd")
 
 [node name="cutscene_spawner" parent="." instance=ExtResource("8_nr06e")]
+position = Vector2(2251, 47)
 
 [node name="Enemies" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_nag8a")
 format = 2
-layer_0/tile_data = PackedInt32Array(393252, 0, 131072, 720939, 0, 65536, 524337, 0, 262144)

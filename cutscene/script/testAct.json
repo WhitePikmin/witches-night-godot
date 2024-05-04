@@ -2,27 +2,45 @@
 	"dialogue": [
 		{
 			"back": "black_bg",
-			"name": "",
-			"message": "Our story begins with this..."
+			"name": "Adele",
+			"speaker": "left",
+			"left_char": "adele/neutral",
+			"message": "Ah darn, I lost the thief... At this rate I'm never getting that crown back!"
 		},
 		{
-			"music": "lively-tavern",
-			"back": "shop_bg",
+			"name": "???",
+			"speaker": "",
+			"message": "And you're right about that!"
+		},
+		{
 			"name": "Adele",
-			"left_char": "adele/neutral",
-			"right_char": "charlotte/neutral",
 			"speaker": "left",
-			"message": "Hi Charlotte!"
+			"message": "Huh? Who just agreed with me?"
+		},
+		{
+			"name":"Charlotte",
+			"speaker":"right",
+			"right_char": "charlotte/neutral",
+			"spawn_boss": "res://objects/bosses/charlotte/charlotte.tscn",
+			"message":"It was me, Charlotte the great! And that crown is gonna be mine!"
+		},
+		{
+			"name": "Adele",
+			"speaker": "left",
+			"message": "What? No fair! I had it first! Finder's keeper!"
 		},
 		{
 			"name": "Charlotte",
 			"speaker": "right",
-			"message": "Shut the fuck up Adele."
+			"message": "You don't have the right to claim that crown if you lost it so easily! I'd me a much more responsible owner!"
 		},
 		{
-			"speaker":"",
-			"name":"",
-			"message":"The end :)"
-		}
+			"message": "Now then! I'll just make sure you stay outta my way!"
+		},
+		{
+			"name": "Adele",
+			"speaker": "left",
+			"message": "Bring it on Charlotte!"
+		},
 	]
 }

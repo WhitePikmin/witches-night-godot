@@ -4,9 +4,15 @@ var textRate = 1
 var textTimer = 0
 var run = true
 
-@onready var parent: CanvasLayer = $"../../..";
-@onready var modulator: CanvasModulate = $"../../../CanvasModulate";
-@onready var fadeOutTimer: Timer = $"../../../FadeOutTimer";
+@onready var parent: CanvasLayer = $"../../../.."
+@onready var modulator: CanvasModulate = $"../../../CanvasModulate"
+@onready var fadeOutTimer: Timer = $"../../../../FadeOutTimer"
+@onready var fadeInTimer: Timer = $"../../../../FadeInTimer"
+
+@onready var topBar: MeshInstance2D = $"../../../../TopBar";
+@onready var bottomBar: MeshInstance2D = $"../../../../BottomBar";
+var bottomBarY;
+var topBarY;
 
 var dataFile = "res://cutscene/script/testAct.json"
 var nameText : RichTextLabel
@@ -51,11 +57,23 @@ func _ready():
 	
 	data = JSON.parse_string(jsonStr)
 	
+	modulator.color = Color(1.0,1.0,1.0,0.0);
+	fadeInTimer.start();
+	
+	topBarY = topBar.position.y;
+	bottomBarY = bottomBar.position.y;
+	
+	
 	_showNextParagraph()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if !fadeInTimer.is_stopped():
+		var opacity = (fadeInTimer.wait_time - fadeInTimer.time_left) / fadeInTimer.wait_time;
+		modulator.color = Color(1.0,1.0,1.0,opacity);
+		setBarsAnimation(opacity);
+	
 	if fadeOutTimer.is_stopped():
 		if not transitionning:
 			if Input.is_action_just_pressed("shoot"):
@@ -91,7 +109,15 @@ func _process(delta):
 					transitionning = false
 					dialogueSystem.visible = true
 	else:
-		modulator.color = Color(1.0,1.0,1.0,fadeOutTimer.time_left / fadeOutTimer.wait_time);
+		var opacity = fadeOutTimer.time_left / fadeOutTimer.wait_time;
+		modulator.color = Color(1.0,1.0,1.0,opacity);
+		setBarsAnimation(opacity);
+
+func setBarsAnimation(value):
+	var bottomMargin = get_viewport_rect().size.y - bottomBarY + (bottomBar.transform.get_scale().y / 2);
+	topBar.position.y    = (topBar.transform.get_scale().y * value) - topBarY
+	bottomBar.position.y = (bottomBarY + bottomMargin) - (bottomBar.transform.get_scale().y * value);
+	
 
 func _showNextParagraph():
 	if paragraphIndex < data['dialogue'].size():
@@ -130,6 +156,10 @@ func _showNextParagraph():
 			else:
 				leftChar.stopSpeaking()
 				rightChar.stopSpeaking()
+				
+		if 'spawn_boss' in parVals:
+			Utils.createBoss(parData['spawn_boss']);
+			
 		
 		#if 'music' in parVals:
 		#	if parData['music'] == "":

@@ -10,4 +10,4 @@ func _ready():
 
 func _setdefaultPos():
 	var width = texture.get_width()
-	defaultPos = Vector2(1920 - (MARGIN + width),0)
+	defaultPos = Vector2(1920 - (MARGIN + width),VERTICAL_POS)

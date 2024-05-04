@@ -1,12 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl1ak4eejd8tb"]
+[gd_scene load_steps=7 format=3 uid="uid://dl1ak4eejd8tb"]
 
 [ext_resource type="Texture2D" uid="uid://cinrma816oc7o" path="res://images/backgrounds/bck_plains_sky-0.png" id="1_b04sc"]
+[ext_resource type="Script" path="res://objects/backgrounds/background.gd" id="1_bvqpt"]
 [ext_resource type="Texture2D" uid="uid://3ivllfu5fvtp" path="res://images/backgrounds/bck_plains_clouds-0.png" id="2_rhidk"]
 [ext_resource type="Texture2D" uid="uid://c8evwjx1usidc" path="res://images/backgrounds/bck_plains_back-0.png" id="3_fs8s1"]
 [ext_resource type="Texture2D" uid="uid://d1gl2buviyuli" path="res://images/backgrounds/bck_plains_front-0.png" id="4_s2d2g"]
 [ext_resource type="Texture2D" uid="uid://ddq5mwa8mpfyd" path="res://images/backgrounds/bck_plains_mist-0.png" id="5_qur6m"]
 
 [node name="BackPlains" type="Node"]
+script = ExtResource("1_bvqpt")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -100
