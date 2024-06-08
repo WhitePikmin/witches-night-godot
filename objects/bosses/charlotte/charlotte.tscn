@@ -126,6 +126,7 @@ script = ExtResource("1_d1iis")
 material = SubResource("ShaderMaterial_i0ji3")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_kj16a")
+animation = &"attacking"
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
 position = Vector2(-7, 2)

@@ -5,11 +5,12 @@ signal star_count_changed
 
 const FPS_CAP = 60;
 const SCREEN_SCROLL_SPEED = 2;
+const DRAMATIC_PAUSE_LENGTH = 100;
 
 var current_scene = null
 
 var Player: Player;
-var Boss: Boss;
+var Boss: Enemy;
 
 var PlayerHP: int;
 const PLAYER_HP_MAX = 3;
@@ -22,6 +23,9 @@ const RESPAWN_TIME = 60 * 3;
 
 var consoleObject: CanvasLayer;
 var moveBg = true;
+
+var dramaticPause = false;
+var dramaticPauseTimer = 0;
 
 var background: Background;
 
@@ -50,25 +54,35 @@ func _ready():
 
 
 func _process(delta):
-	if ! Engine.is_editor_hint():
-		var d = delta * Global.FPS_CAP;
-		if respawnTimer != -100:
-			respawnTimer -= d;
-			if respawnTimer <= 0:
-				respawnPlayer();
-				respawnTimer = -100;
-	
-		if Input.is_action_just_pressed("debug_console"):
-			if ! get_tree().paused:
-				get_tree().paused = true;
-				var c = Utils.loadAsset("res://misc/debug_console.tscn");
-				consoleObject = c.instantiate();
-				get_tree().root.add_child(consoleObject);
-			else:
-				consoleHistory.pop_back();
-				endConsole();
+	if !dramaticPause:
+		if ! Engine.is_editor_hint():
+			var d = delta * Global.FPS_CAP;
+			if respawnTimer != -100:
+				respawnTimer -= d;
+				if respawnTimer <= 0:
+					respawnPlayer();
+					respawnTimer = -100;
 		
-		moveRails(delta);
+			if Input.is_action_just_pressed("debug_console"):
+				if ! get_tree().paused:
+					get_tree().paused = true;
+					var c = Utils.loadAsset("res://misc/debug_console.tscn");
+					consoleObject = c.instantiate();
+					get_tree().root.add_child(consoleObject);
+				else:
+					consoleHistory.pop_back();
+					endConsole();
+			
+			moveRails(delta);
+	else:
+		dramaticPauseTimer -= (delta * Global.FPS_CAP);
+		if(dramaticPauseTimer <= 0):
+			dramaticPause = false;
+			background.setFadeEffect(false);
+			get_tree().paused = false;
+			Boss.explode();
+			Utils.destroyAllEnemies();
+			Boss = null;
 
 func moveRails(d):
 	if (Utils.railObject != null):
@@ -107,3 +121,17 @@ func endCutscene():
 	if(Global.Boss != null):
 		Global.Boss.startHostility();
 	HUD.visible = true;
+
+func killBoss():
+	if !dramaticPause and Boss != null :
+		background.setFadeEffect(true);
+		get_tree().paused = true;
+		dramaticPause = true;
+		dramaticPauseTimer = DRAMATIC_PAUSE_LENGTH;
+		
+		var snd : Node = Utils.createObject("res://sounds/SoundEmitter.tscn",Boss.position);
+		snd.stream = load("res://sounds/assets/sfx/snd_crash.wav");
+		snd.process_mode = Node.PROCESS_MODE_ALWAYS;
+		snd.play();
+		
+

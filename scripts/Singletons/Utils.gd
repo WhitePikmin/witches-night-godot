@@ -35,11 +35,14 @@ func createObject(path: String,pos: Vector2, where: CreateAt = CreateAt.RAIL):
 		
 	return instance;
 
+func getScreenEdge() :
+	return railObject.position.x + 1920;
+
 func createBoss(path:String):
 	var obj = loadAsset(path);
 	var instance : Boss = obj.instantiate();
 	get_tree().root.add_child(instance);
-	instance.position = Vector2(railObject.position.x + 1920 + 50, 1080 / 2);
+	instance.position = Vector2(getScreenEdge() + 50, 1080 / 2);
 	instance.set_process(true);
 	Global.Boss = instance;
 

@@ -4,6 +4,7 @@ class_name PlayerState_Damaged
 
 
 func process(d):
+	player.focusing = false;
 	player.delta = d * Global.FPS_CAP;
 	clampf(player.delta,1.0,2.0);
 

@@ -5,7 +5,8 @@ class_name PlayerState_Cutscene
 const TARGET = Vector2(200.0,500.0);
 
 func process(d):
-
+	
+	player.focusing = false;
 	player.delta = d * Global.FPS_CAP;
 	clampf(player.delta,1.0,2.0);
 

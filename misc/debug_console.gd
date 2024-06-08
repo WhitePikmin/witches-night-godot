@@ -36,6 +36,9 @@ func executeCommand(command:String,param:String):
 		"kill":
 			Global.PlayerHP = 0
 			Global.Player.die();
+		"kill_boss":
+			if (Global.Boss != null):
+				Global.Boss.HP = 0;
 		"set_lives":
 			var lives;
 			if param.length() != 0:

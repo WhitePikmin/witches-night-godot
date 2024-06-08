@@ -34,11 +34,15 @@ func stopFlashing():
 	boss.sprite.get_material().set_shader_parameter("strength", 0.0);
 
 func die():
-	Utils.createObject("res://objects/particles/poofCloud.tscn",boss.position);
+	Global.killBoss();
+
+func explode():
+	Utils.createObject("res://objects/particles/BossDefeated.tscn",boss.position);
 	var snd = Utils.createObject("res://sounds/SoundEmitter.tscn",boss.position);
-	snd.stream = load("res://sounds/assets/sfx/snd_poof.wav");
+	snd.stream = load("res://sounds/assets/sfx/snd_flash.wav");
 	snd.play();
-	queue_free();
+	boss.spawnStars(boss.starCount);
+	boss.queue_free();
 
 func spawnStars(count):
 	for i in range(count):

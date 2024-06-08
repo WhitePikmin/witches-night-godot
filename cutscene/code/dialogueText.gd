@@ -76,7 +76,7 @@ func _process(delta):
 	
 	if fadeOutTimer.is_stopped():
 		if not transitionning:
-			if Input.is_action_just_pressed("shoot"):
+			if (Input.is_action_just_pressed("shoot") || Input.is_action_pressed("skip_dialogue")):
 				if visible_characters >= text.length():
 					
 					if 'trans_out' in parData.keys():

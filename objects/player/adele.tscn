@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://xr5vi16elmg7"]
+[gd_scene load_steps=27 format=3 uid="uid://xr5vi16elmg7"]
 
 [ext_resource type="Script" path="res://objects/player/adele.gd" id="1_sfrav"]
 [ext_resource type="Texture2D" uid="uid://dy1x64fjtvpk7" path="res://images/sprites/spr_adele-7.png" id="2_11cl8"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://itu00vbdm6g" path="res://images/sprites/spr_adele_throw-2.png" id="21_kojlo"]
 [ext_resource type="Texture2D" uid="uid://dosayfdqp5xcs" path="res://images/sprites/spr_adele_throw-5.png" id="22_47ldd"]
 [ext_resource type="Texture2D" uid="uid://bwx5scp5mmd4h" path="res://images/sprites/spr_adele_throw-4.png" id="23_tta8o"]
+[ext_resource type="Texture2D" uid="uid://cof84wmac7ahf" path="res://images/sprites/spr_adele_hitbox-0.png" id="24_d7q7s"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_6m6af"]
 animations = [{
@@ -109,7 +110,7 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_sij80"]
-radius = 20.0
+radius = 12.0416
 
 [node name="Adele" type="CharacterBody2D"]
 position = Vector2(78, 104)
@@ -126,6 +127,11 @@ scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_6m6af")
 animation = &"shooting"
 frame_progress = 0.93212
+
+[node name="hitboxSprite" type="Sprite2D" parent="."]
+position = Vector2(32.0938, 3)
+scale = Vector2(0.818015, 0.933333)
+texture = ExtResource("24_d7q7s")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32, 3)

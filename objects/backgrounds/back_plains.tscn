@@ -10,6 +10,14 @@
 [node name="BackPlains" type="Node"]
 script = ExtResource("1_bvqpt")
 
+[node name="FadeEffect" type="CanvasLayer" parent="."]
+layer = -90
+visible = false
+
+[node name="MeshInstance2D" type="Polygon2D" parent="FadeEffect"]
+color = Color(0, 0, 0, 0.47451)
+polygon = PackedVector2Array(0, 1080, 1920, 1080, 1920, 0, 0, 0)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -100
 
@@ -70,6 +78,8 @@ metadata/_edit_lock_ = true
 
 [node name="ParallaxMist" type="ParallaxBackground" parent="."]
 layer = -95
+offset = Vector2(0, 55)
+transform = Transform2D(1, 0, 0, 1, 0, 55)
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxMist"]
 texture_repeat = 2

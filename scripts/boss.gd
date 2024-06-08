@@ -2,6 +2,10 @@ extends Enemy
 class_name Boss
 
 var state: BossState;
+var starCount = 10;
+var MAX_HP: int;
+var phaseSections: Array;
+var sectionIndex: int;
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -37,8 +41,21 @@ func stopFlashing():
 func die():
 	state.die();
 
+func explode():
+	state.explode();
+
 func spawnStars(count):
 	state.spawnStars(count);
 
 func startHostility():
 	pass
+
+func changeSpriteFrame(name: String):
+	sprite.play(name,1.0,false);
+
+func createPhaseSections(sections:int,maxHp:int):
+	for i in range(1,sections):
+		var val = (maxHp / sections) * i;
+		phaseSections.push_back(val);
+		pass
+		

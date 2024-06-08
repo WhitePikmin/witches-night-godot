@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d21l1cismxx0n"]
+
+[ext_resource type="PackedScene" uid="uid://bs80ata4u0c4t" path="res://objects/bullet-patterns/spiral_pattern_1.tscn" id="1_oppkq"]
+[ext_resource type="PackedScene" uid="uid://m88icu55cakm" path="res://objects/bullet-patterns/circular_pattern_1.tscn" id="2_ta8oa"]
+[ext_resource type="PackedScene" uid="uid://bhjfagpb6qpdq" path="res://objects/projectiles/largeBullet.tscn" id="3_024p3"]
+
+[node name="Big_Ghost_spell_1" type="Node2D"]
+position = Vector2(257, 139)
+
+[node name="SpiralPattern1" parent="." instance=ExtResource("1_oppkq")]
+INTERVAL = 20
+MAX_BURST_COUNT = -1
+BULLET_PER_BURST = 8
+SPIN_SPEED = 15.0
+SWAYING = true
+
+[node name="CircularPattern1" parent="." instance=ExtResource("2_ta8oa")]
+BULLET_ASSET = ExtResource("3_024p3")
+INTERVAL = 50
+MAX_BURST_COUNT = -1
+BULLET_PER_BURST = 14
+bulletSpeed = 5.0

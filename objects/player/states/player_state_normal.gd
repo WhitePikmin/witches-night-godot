@@ -12,7 +12,20 @@ func process(d):
 	
 	player.move();
 	
+	if Input.is_action_pressed("focus"):
+		player.focusing = true;
+	else:
+		player.focusing = false;
+	
+	
 	player.constantCounter += 1;
+	
+	if player.focusing:
+		player.sprite.modulate.a = 0.5;
+		player.hitboxSprite.visible = true;
+	else:
+		player.sprite.modulate.a = 1;
+		player.hitboxSprite.visible = false;
 
 func check_inputs():
 	if Input.is_action_pressed("ui_left"):
@@ -35,7 +48,10 @@ func check_inputs():
 	if player.direction == Vector2(0,0):
 		player.speed = 0;
 	else:
-		player.speed = player.MAX_SPEED;
+		if(player.focusing):
+			player.speed = player.FOCUS_SPEED;
+		else:
+			player.speed = player.MAX_SPEED;
 		player.direction = player.direction.normalized();
 
 func takeAHit(hpLoss: int):

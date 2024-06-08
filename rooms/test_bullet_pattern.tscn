@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bow1388p8kq7v"]
+
+[ext_resource type="PackedScene" uid="uid://d24qbgq6q2bj6" path="res://objects/gameObjects/rail.tscn" id="1_g58t6"]
+[ext_resource type="PackedScene" uid="uid://dtprqi7l0c8v7" path="res://objects/bullet-patterns/complex-patterns/charlotte_spell_2.tscn" id="3_f6ler"]
+[ext_resource type="PackedScene" uid="uid://cnl4vm7dqusvj" path="res://objects/backgrounds/back_night.tscn" id="3_ssbqi"]
+
+[node name="TestBulletPattern" type="Node2D"]
+
+[node name="Rail" parent="." instance=ExtResource("1_g58t6")]
+
+[node name="BackNight" parent="." instance=ExtResource("3_ssbqi")]
+
+[node name="Charlotte_spell_2" parent="." instance=ExtResource("3_f6ler")]
+position = Vector2(1438, 540)

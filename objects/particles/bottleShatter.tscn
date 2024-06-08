@@ -28,7 +28,7 @@ scale_min = 3.0
 scale_max = 3.0
 color_ramp = SubResource("GradientTexture1D_0d2hh")
 
-[node name="bottleShatter" type="GPUParticles2D"]
+[node name="BossDefeated" type="GPUParticles2D"]
 emitting = false
 amount = 4
 process_material = SubResource("ParticleProcessMaterial_s7hws")

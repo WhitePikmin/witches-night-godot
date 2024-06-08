@@ -1,0 +1,73 @@
+[gd_scene load_steps=12 format=3 uid="uid://dkb60og7m8yql"]
+
+[ext_resource type="Script" path="res://objects/enemies/big-ghost.gd" id="1_5emoo"]
+[ext_resource type="Shader" path="res://shader/flash.gdshader" id="2_kteug"]
+[ext_resource type="Texture2D" uid="uid://cjyvo3xnrgcow" path="res://images/sprites/spr_big_ghost-0.png" id="3_pn4hn"]
+[ext_resource type="Texture2D" uid="uid://bfdpgrj5j6en3" path="res://images/sprites/spr_big_ghost-2.png" id="4_6atlc"]
+[ext_resource type="Texture2D" uid="uid://ddcttbs4oayk0" path="res://images/sprites/spr_big_ghost-1.png" id="5_gmoyg"]
+[ext_resource type="Script" path="res://scripts/hurtbox.gd" id="5_vdevc"]
+[ext_resource type="Texture2D" uid="uid://b325ckbfk8v3k" path="res://images/sprites/spr_big_ghost-3.png" id="6_k5bpc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i0ji3"]
+shader = ExtResource("2_kteug")
+shader_parameter/white = Vector3(1, 1, 1)
+shader_parameter/strength = 1.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kj16a"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pn4hn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_6atlc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_gmoyg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_k5bpc")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kb4cq"]
+radius = 27.6847
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_0wn0n"]
+radius = 29.3636
+
+[node name="Big-Ghost" type="RigidBody2D"]
+collision_layer = 4
+collision_mask = 8
+gravity_scale = 0.0
+script = ExtResource("1_5emoo")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_i0ji3")
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_kj16a")
+frame_progress = 0.76724
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 5)
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_kb4cq")
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+position = Vector2(-1.90735e-06, 0.499996)
+scale = Vector2(9.9, 11.55)
+
+[node name="HurtBox" type="Area2D" parent="."]
+position = Vector2(1, 0)
+scale = Vector2(3, 3)
+script = ExtResource("5_vdevc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 1.66667)
+shape = SubResource("CircleShape2D_0wn0n")
+
+[connection signal="screen_entered" from="VisibleOnScreenEnabler2D" to="." method="getOnRail"]
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="destroy"]

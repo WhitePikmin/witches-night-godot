@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://dtprqi7l0c8v7"]
+
+[ext_resource type="PackedScene" uid="uid://m88icu55cakm" path="res://objects/bullet-patterns/circular_pattern_1.tscn" id="2_bj5dp"]
+[ext_resource type="PackedScene" uid="uid://bhjfagpb6qpdq" path="res://objects/projectiles/largeBullet.tscn" id="3_u54wl"]
+[ext_resource type="PackedScene" uid="uid://j3xfllkxfaip" path="res://objects/bullet-patterns/edgePattern.tscn" id="3_viaav"]
+
+[node name="Charlotte_spell_2" type="Node2D"]
+position = Vector2(257, 139)
+
+[node name="CircularPattern1" parent="." instance=ExtResource("2_bj5dp")]
+BULLET_ASSET = ExtResource("3_u54wl")
+INTERVAL = 120
+MAX_BURST_COUNT = -1
+BULLET_PER_BURST = 50
+bulletSpeed = 4.0
+ALTERNATE = true
+
+[node name="EdgePattern" parent="." instance=ExtResource("3_viaav")]

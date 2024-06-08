@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://j3xfllkxfaip"]
+
+[ext_resource type="Script" path="res://objects/bullet-patterns/edgePattern.gd" id="1_o1417"]
+
+[node name="EdgePattern" type="Node2D"]
+script = ExtResource("1_o1417")

@@ -9,9 +9,13 @@ var positionPointer: int = 0;
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	super._ready();
+	starCount = 25;
 	setSprite($AnimatedSprite2D);
 	sprite.play("default",1.0,false);
-	HP = 100;
+	HP = 175;
+	MAX_HP = HP;
+	createPhaseSections(4,MAX_HP);
+	sectionIndex = phaseSections.size() - 1;
 	
 	state = CharlotteState_Cutscene.new();
 	state.setup(self);
@@ -23,4 +27,4 @@ func incrementPosition():
 
 func startHostility():
 	positionTimer.start();
-	changeState(CharlotteState_Idle.new());
+	changeState(CharlotteState_Phase1.new());

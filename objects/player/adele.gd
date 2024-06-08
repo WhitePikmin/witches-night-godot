@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 const MAX_SPEED = 16;
+const FOCUS_SPEED = 6;
 
 var state: PlayerState;
 
@@ -15,12 +16,16 @@ var invincible = false;
 var delta: float;
 var sprite: AnimatedSprite2D;
 
+var focusing : bool = false;
+
 
 var shootingCooldown: bool = true;
 
 @onready var shootCooldownTimer: Timer = $ShootCooldown_timer;
 @onready var damageGraceTimer: Timer = $DamageGrace_timer;
 @onready var damagedTimer : Timer = $Damaged_timer;
+
+@onready var hitboxSprite : Sprite2D = $hitboxSprite;
 
 @onready var HUDLayer = $HUD;
 
@@ -65,11 +70,9 @@ func _process(d):
 func check_inputs():
 	state.check_inputs();
 
-
 func move():
 	velocity = direction * speed * delta * Global.FPS_CAP;
 	move_and_slide();
-
 
 func shoot():
 	state.shoot();

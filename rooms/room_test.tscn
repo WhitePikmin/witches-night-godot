@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bgfc3gc0cep1v"]
+[gd_scene load_steps=34 format=3 uid="uid://bgfc3gc0cep1v"]
 
 [ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_dt6l1"]
 [ext_resource type="Script" path="res://rooms/HUD.gd" id="3_4kqok"]
@@ -9,20 +9,29 @@
 [ext_resource type="Script" path="res://scripts/TextDrawer.gd" id="6_qqywd"]
 [ext_resource type="PackedScene" uid="uid://dos7d4s3nvf50" path="res://misc/hp_tick.tscn" id="7_84gkw"]
 [ext_resource type="PackedScene" uid="uid://bb1bf8ub43wtp" path="res://objects/gameObjects/cutscene_spawner.tscn" id="8_nr06e"]
+[ext_resource type="Script" path="res://misc/BossBarParent.gd" id="9_erbq8"]
+[ext_resource type="Shader" path="res://shader/dithering.gdshader" id="9_kun0b"]
+[ext_resource type="Texture2D" uid="uid://clvb35g0r0bdh" path="res://images/sprites/spr_boss_bar-0.png" id="9_pinh1"]
+[ext_resource type="Texture2D" uid="uid://dgfuhwc5hx1xa" path="res://shader/boss bar palette.png" id="10_7jhc3"]
 [ext_resource type="Texture2D" uid="uid://cm34tnjyksr3h" path="res://images/sprites/spr_collectible_star-0.png" id="10_25gct"]
+[ext_resource type="Texture2D" uid="uid://c2s1ich0ry81m" path="res://images/sprites/spr_boss_bar_outline-0.png" id="10_x186k"]
 [ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="11_1oikp"]
+[ext_resource type="Texture2D" uid="uid://cxa2lvgwu2qsn" path="res://shader/bayer16tile2.png" id="11_awxs7"]
 [ext_resource type="PackedScene" uid="uid://bm8bvoftj5g3k" path="res://objects/enemies/cyclop.tscn" id="11_o0qac"]
+[ext_resource type="Script" path="res://misc/boss_healthbar.gd" id="12_3br64"]
 [ext_resource type="PackedScene" uid="uid://dv4xdaug7hhe2" path="res://objects/enemies/fairy-green.tscn" id="12_43ux3"]
 [ext_resource type="PackedScene" uid="uid://dexhjxxw7wrye" path="res://objects/bosses/charlotte/charlotte.tscn" id="14_eodh8"]
+[ext_resource type="PackedScene" uid="uid://cwek845ucxuco" path="res://objects/gameObjects/mini_boss_spawner.tscn" id="22_cca0e"]
+[ext_resource type="PackedScene" uid="uid://dkb60og7m8yql" path="res://objects/enemies/big-ghost.tscn" id="23_g52y8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
 shader = ExtResource("2_dt6l1")
 shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.215
-shader_parameter/scanlines_width = 0.291
-shader_parameter/grille_opacity = 0.115
+shader_parameter/scanlines_opacity = 0.157
+shader_parameter/scanlines_width = 0.052
+shader_parameter/grille_opacity = 0.078
 shader_parameter/resolution = Vector2(640, 480)
-shader_parameter/pixelate = true
+shader_parameter/pixelate = false
 shader_parameter/roll = false
 shader_parameter/roll_speed = 8.0
 shader_parameter/roll_size = 0.0
@@ -31,8 +40,8 @@ shader_parameter/distort_intensity = 0.083
 shader_parameter/noise_opacity = 0.0
 shader_parameter/noise_speed = 0.0
 shader_parameter/static_noise_intensity = 0.03
-shader_parameter/aberration = 0.00500005
-shader_parameter/brightness = 1.4
+shader_parameter/aberration = 0.00400005
+shader_parameter/brightness = 1.0
 shader_parameter/discolor = false
 shader_parameter/warp_amount = 0.05
 shader_parameter/clip_warp = false
@@ -166,6 +175,24 @@ func refreshTextDrawer():
 	textDrawer.display_text();
 "
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1ks3"]
+shader = ExtResource("9_kun0b")
+shader_parameter/u_bit_depth = 50
+shader_parameter/u_contrast = 1.15
+shader_parameter/u_offset = 0.07
+shader_parameter/u_dither_size = 0.2
+shader_parameter/u_dither_tex = ExtResource("11_awxs7")
+shader_parameter/u_color_tex = ExtResource("10_7jhc3")
+
+[sub_resource type="Gradient" id="Gradient_21heo"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nlxff"]
+gradient = SubResource("Gradient_21heo")
+fill_from = Vector2(1, 0.299145)
+fill_to = Vector2(0, 0)
+repeat = 2
+
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_yhi38"]
 resource_name = "Enemies"
 scenes/1/scene = ExtResource("11_o0qac")
@@ -230,9 +257,47 @@ texture = ExtResource("11_1oikp")
 position = Vector2(1839, 66)
 script = ExtResource("6_qqywd")
 
+[node name="BossBar" type="Node2D" parent="HUD"]
+position = Vector2(1567, 1013)
+script = ExtResource("9_erbq8")
+
+[node name="HealthSprite" type="Sprite2D" parent="HUD/BossBar"]
+position = Vector2(0, 24)
+scale = Vector2(3, 3)
+texture = ExtResource("9_pinh1")
+
+[node name="Health" type="Polygon2D" parent="HUD/BossBar"]
+visible = false
+material = SubResource("ShaderMaterial_d1ks3")
+position = Vector2(0, -13)
+scale = Vector2(1.00614, 2.55172)
+texture = SubResource("GradientTexture2D_nlxff")
+texture_offset = Vector2(150, 0)
+texture_scale = Vector2(0.2, 0.2)
+polygon = PackedVector2Array(-319.04, 7.44592, -325.997, 19.5946, 319.04, 19.5946, 325, 8, -1.52414, 8.50703)
+
+[node name="Empty" type="Polygon2D" parent="HUD/BossBar"]
+position = Vector2(0, -13)
+scale = Vector2(1.00614, 2.55172)
+color = Color(0.141176, 0.0745098, 0.0745098, 0.952941)
+texture = SubResource("GradientTexture2D_nlxff")
+texture_offset = Vector2(150, 0)
+texture_scale = Vector2(0.2, 0.2)
+polygon = PackedVector2Array(325, 8, 319.04, 19.595, 319.04, 19.5946, 325, 8)
+script = ExtResource("12_3br64")
+
+[node name="Outline" type="Sprite2D" parent="HUD/BossBar"]
+scale = Vector2(3, 3)
+texture = ExtResource("10_x186k")
+
 [node name="cutscene_spawner" parent="." instance=ExtResource("8_nr06e")]
-position = Vector2(2251, 47)
+position = Vector2(9590, 47)
 
 [node name="Enemies" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_nag8a")
 format = 2
+layer_0/tile_data = PackedInt32Array(65580, 0, 196608, 262188, 0, 196608, 458796, 0, 196608, 983089, 0, 196608, 786481, 0, 196608, 589873, 0, 196608, 458785, 0, 196608, 720929, 0, 196608)
+
+[node name="mini_boss_spawner" parent="." instance=ExtResource("22_cca0e")]
+position = Vector2(2352, 0)
+miniBoss = ExtResource("23_g52y8")

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwek845ucxuco"]
+
+[ext_resource type="Script" path="res://objects/gameObjects/mini_boss_spawner.gd" id="1_5lcie"]
+
+[node name="mini_boss_spawner" type="Node2D"]
+position = Vector2(3184, 47)
+script = ExtResource("1_5lcie")
+
+[node name="VisibleNotif" type="VisibleOnScreenNotifier2D" parent="."]
+position = Vector2(20, 0)
+
+[node name="TryAgain_timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="screen_entered" from="VisibleNotif" to="." method="spawn_mini_boss"]
+[connection signal="timeout" from="TryAgain_timer" to="." method="spawn_cutscene"]

@@ -1,6 +1,7 @@
 extends Node2D
 
-@onready var tryAgainTimer: Timer = $TryAgain_timer;
+@onready var EmptyBar = $Empty;
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -8,12 +9,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
-
-
-func spawn_cutscene():
-	Utils.destroyAllEnemies();
-	if(Global.Player == null):
-		tryAgainTimer.start();
+	if (Global.Boss != null):
+		if(!visible && Global.HUD.visible):
+			EmptyBar.MAX_HEALTH = Global.Boss.HP;
+			EmptyBar.health = 0;
+			print(EmptyBar.health);
+			visible = true;
 	else:
-		Global.Player.startCutscene();
+		visible = false;
+	pass
