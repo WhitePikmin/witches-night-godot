@@ -18,7 +18,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(d):
-	delta = d * Global.FPS_CAP;
+	delta = Global.adjustDelta(d) * Global.FPS_CAP;
 
 func move():
 	velocity = direction * speed * delta;

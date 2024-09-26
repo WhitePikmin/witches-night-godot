@@ -4,6 +4,8 @@ extends Node
 signal star_count_changed
 
 const FPS_CAP = 60;
+const FRAME_DURATION = 1 / FPS_CAP;
+const DELTA_LIMIT = FPS_CAP / 3;
 const SCREEN_SCROLL_SPEED = 2;
 const DRAMATIC_PAUSE_LENGTH = 100;
 
@@ -24,6 +26,8 @@ const RESPAWN_TIME = 60 * 3;
 var consoleObject: CanvasLayer;
 var moveBg = true;
 
+var nextLevel : String = "res://rooms/room_test.tscn"
+
 var dramaticPause = false;
 var dramaticPauseTimer = 0;
 
@@ -35,6 +39,7 @@ var consoleHistory: Array = [];
 var collectedStarTarget: Vector2 = Vector2(0,0);
 var starDisplay: Node2D;
 var root: Node;
+var transitionFade: TransitionFade;
 @onready var HUD: CanvasLayer = $HUD;
 
 @export var starCount: int:	
@@ -51,7 +56,9 @@ func _ready():
 	Lives = LIVES_STARTING_COUNT;
 	current_scene = root.get_child(root.get_child_count() -1);
 
-
+func goto_next_level():
+	if(transitionFade):
+		transitionFade.fadeOut(nextLevel);
 
 func _process(delta):
 	if !dramaticPause:
@@ -135,3 +142,7 @@ func killBoss():
 		snd.play();
 		
 
+func adjustDelta(delta:float):
+	if delta > DELTA_LIMIT:
+		return FRAME_DURATION;
+	return delta;

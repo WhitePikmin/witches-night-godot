@@ -1,0 +1,336 @@
+[gd_scene load_steps=27 format=3 uid="uid://n7p7trvgoixw"]
+
+[ext_resource type="Script" path="res://rooms/HUD.gd" id="1_vld40"]
+[ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_br5qv"]
+[ext_resource type="Script" path="res://misc/transitionFade.gd" id="3_a2rkt"]
+[ext_resource type="PackedScene" uid="uid://dos7d4s3nvf50" path="res://misc/hp_tick.tscn" id="4_43thc"]
+[ext_resource type="Script" path="res://scripts/TextDrawer.gd" id="5_dbnku"]
+[ext_resource type="Texture2D" uid="uid://cm34tnjyksr3h" path="res://images/sprites/spr_collectible_star-0.png" id="6_27qy4"]
+[ext_resource type="Texture2D" uid="uid://cr6ks6ri55csq" path="res://images/sprites/spr_adele_hat-0.png" id="7_ecuo8"]
+[ext_resource type="Script" path="res://misc/BossBarParent.gd" id="8_3cv3a"]
+[ext_resource type="Texture2D" uid="uid://clvb35g0r0bdh" path="res://images/sprites/spr_boss_bar-0.png" id="9_aty6v"]
+[ext_resource type="Shader" path="res://shader/dithering.gdshader" id="10_t1p13"]
+[ext_resource type="Texture2D" uid="uid://dgfuhwc5hx1xa" path="res://shader/boss bar palette.png" id="11_egqd6"]
+[ext_resource type="Texture2D" uid="uid://cxa2lvgwu2qsn" path="res://shader/bayer16tile2.png" id="12_vindk"]
+[ext_resource type="Script" path="res://misc/boss_healthbar.gd" id="13_8gjgh"]
+[ext_resource type="Texture2D" uid="uid://c2s1ich0ry81m" path="res://images/sprites/spr_boss_bar_outline-0.png" id="14_0n8t8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
+shader = ExtResource("2_br5qv")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.157
+shader_parameter/scanlines_width = 0.052
+shader_parameter/grille_opacity = 0.078
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/pixelate = false
+shader_parameter/roll = false
+shader_parameter/roll_speed = 8.0
+shader_parameter/roll_size = 0.0
+shader_parameter/roll_variation = 1.764
+shader_parameter/distort_intensity = 0.083
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.0
+shader_parameter/static_noise_intensity = 0.03
+shader_parameter/aberration = 0.00400005
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = false
+shader_parameter/warp_amount = 0.05
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.159
+
+[sub_resource type="Animation" id="Animation_4o0xl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_agkj6"]
+resource_name = "fade-in"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1920, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_2rvex"]
+resource_name = "fade-out"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.333333),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-2880, 0), Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rstwe"]
+_data = {
+"RESET": SubResource("Animation_4o0xl"),
+"fade-in": SubResource("Animation_agkj6"),
+"fade-out": SubResource("Animation_2rvex")
+}
+
+[sub_resource type="GDScript" id="GDScript_ae5al"]
+script/source = "extends Node2D
+
+var ticks: Array;
+var HPCount;
+@onready var hpSprite = load(\"res://images/sprites/spr_healthbar-0.png\")
+@onready var hpEmptySprite = load(\"res://images/sprites/spr_healthbar-1.png\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	ticks = [];
+	HPCount = Global.PLAYER_HP_MAX;
+	ticks.push_back($HPTick);
+	var a: Sprite2D;
+	var tickAsset = load(\"res://misc/hp_tick.tscn\");
+	for i in range(1,Global.PLAYER_HP_MAX):
+		var newTick = tickAsset.instantiate();
+		
+		var newPosition = Vector2(0 + (($HPTick.texture.get_width() + 2) * (i) * 3),0);
+		newTick.position = newPosition;
+		add_child(newTick);
+		ticks.push_back(newTick);
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if (HPCount != Global.PlayerHP):
+		HPCount = Global.PlayerHP;
+		for i in range(0,Global.PLAYER_HP_MAX):
+			if i < HPCount:
+				ticks[i].texture = hpSprite;
+			else:
+				ticks[i].texture = hpEmptySprite;
+"
+
+[sub_resource type="GDScript" id="GDScript_xop3x"]
+script/source = "extends Node2D
+
+var starDisplay: int;
+const OFFSET = 32 * 3;
+var display = true;
+const DISPLAY_TIME = 60 * 3;
+var displayTimer = DISPLAY_TIME;
+@onready var initialPosition = position;
+
+@onready var textDrawer = $text_drawer;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	Global.starDisplay = self;
+	starDisplay = Global.starCount;
+	refreshTextDrawer();
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	displayTimer -= delta * Global.FPS_CAP;
+	if (starDisplay != Global.starCount):
+		starDisplay -= sign(starDisplay - Global.starCount);
+		displayTimer = DISPLAY_TIME;
+		refreshTextDrawer();
+	
+	if(displayTimer <= 0):
+		position.y = move_toward(position.y,initialPosition.y - OFFSET,10.0);
+	else:
+		position.y = move_toward(position.y,initialPosition.y,10.0);
+	pass
+
+func refreshTextDrawer():
+	textDrawer.set_text(str(starDisplay));
+	textDrawer.display_text();
+"
+
+[sub_resource type="GDScript" id="GDScript_213dh"]
+script/source = "extends Sprite2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	Global.collectedStarTarget = global_position;
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+"
+
+[sub_resource type="GDScript" id="GDScript_l1xfv"]
+script/source = "extends Node2D
+
+var livesDisplay: int;
+const OFFSET = 40 * 3;
+var display = true;
+const DISPLAY_TIME = 60 * 3;
+var displayTimer = DISPLAY_TIME;
+@onready var initialPosition = position;
+
+@onready var textDrawer = $text_drawer;
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	livesDisplay = Global.Lives;
+	refreshTextDrawer();
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	displayTimer -= delta * Global.FPS_CAP;
+	if (livesDisplay != Global.Lives):
+		livesDisplay -= sign(livesDisplay - Global.Lives);
+		displayTimer = DISPLAY_TIME;
+		refreshTextDrawer();
+	
+	if(displayTimer <= 0):
+		position.y = move_toward(position.y,initialPosition.y - OFFSET,10.0);
+	else:
+		position.y = move_toward(position.y,initialPosition.y,10.0);
+	pass
+
+func refreshTextDrawer():
+	textDrawer.set_text(str(livesDisplay));
+	textDrawer.display_text();
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1ks3"]
+shader = ExtResource("10_t1p13")
+shader_parameter/u_bit_depth = 50
+shader_parameter/u_contrast = 1.15
+shader_parameter/u_offset = 0.07
+shader_parameter/u_dither_size = 0.2
+shader_parameter/u_dither_tex = ExtResource("12_vindk")
+shader_parameter/u_color_tex = ExtResource("11_egqd6")
+
+[sub_resource type="Gradient" id="Gradient_21heo"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_nlxff"]
+gradient = SubResource("Gradient_21heo")
+fill_from = Vector2(1, 0.299145)
+fill_to = Vector2(0, 0)
+repeat = 2
+
+[node name="HUD" type="CanvasLayer"]
+layer = 99
+script = ExtResource("1_vld40")
+
+[node name="CRT_filter" type="ColorRect" parent="."]
+visible = false
+z_index = 4096
+z_as_relative = false
+material = SubResource("ShaderMaterial_8ksru")
+offset_right = 1920.0
+offset_bottom = 1080.0
+
+[node name="TransitionFade" type="ColorRect" parent="."]
+visible = false
+z_index = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 960.0
+offset_bottom = 540.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_a2rkt")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TransitionFade"]
+libraries = {
+"": SubResource("AnimationLibrary_rstwe")
+}
+
+[node name="HP" type="Node2D" parent="."]
+position = Vector2(81, 1038)
+script = SubResource("GDScript_ae5al")
+
+[node name="HPTick" parent="HP" instance=ExtResource("4_43thc")]
+
+[node name="StarDisplay" type="Node2D" parent="."]
+position = Vector2(60, 0)
+script = SubResource("GDScript_xop3x")
+
+[node name="text_drawer" type="Node2D" parent="StarDisplay"]
+position = Vector2(96, 66)
+script = ExtResource("5_dbnku")
+
+[node name="Sprite2D" type="Sprite2D" parent="StarDisplay"]
+position = Vector2(0, 66)
+scale = Vector2(3, 3)
+texture = ExtResource("6_27qy4")
+script = SubResource("GDScript_213dh")
+
+[node name="Lives" type="Node2D" parent="."]
+script = SubResource("GDScript_l1xfv")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lives"]
+position = Vector2(1716, 72)
+scale = Vector2(3, 3)
+texture = ExtResource("7_ecuo8")
+
+[node name="text_drawer" type="Node2D" parent="Lives"]
+position = Vector2(1839, 66)
+script = ExtResource("5_dbnku")
+
+[node name="BossBar" type="Node2D" parent="."]
+position = Vector2(1567, 1013)
+script = ExtResource("8_3cv3a")
+
+[node name="HealthSprite" type="Sprite2D" parent="BossBar"]
+position = Vector2(0, 24)
+scale = Vector2(3, 3)
+texture = ExtResource("9_aty6v")
+
+[node name="Health" type="Polygon2D" parent="BossBar"]
+visible = false
+material = SubResource("ShaderMaterial_d1ks3")
+position = Vector2(0, -13)
+scale = Vector2(1.00614, 2.55172)
+texture = SubResource("GradientTexture2D_nlxff")
+texture_offset = Vector2(150, 0)
+texture_scale = Vector2(0.2, 0.2)
+polygon = PackedVector2Array(-319.04, 7.44592, -325.997, 19.5946, 319.04, 19.5946, 325, 8, -1.52414, 8.50703)
+
+[node name="Empty" type="Polygon2D" parent="BossBar"]
+position = Vector2(0, -13)
+scale = Vector2(1.00614, 2.55172)
+color = Color(0.141176, 0.0745098, 0.0745098, 0.952941)
+texture = SubResource("GradientTexture2D_nlxff")
+texture_offset = Vector2(150, 0)
+texture_scale = Vector2(0.2, 0.2)
+polygon = PackedVector2Array(325, 8, 319.04, 19.595, 319.04, 19.5946, 325, 8)
+script = ExtResource("13_8gjgh")
+
+[node name="Outline" type="Sprite2D" parent="BossBar"]
+scale = Vector2(3, 3)
+texture = ExtResource("14_0n8t8")
+
+[connection signal="animation_finished" from="TransitionFade/AnimationPlayer" to="TransitionFade" method="endAnimation"]

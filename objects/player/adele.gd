@@ -65,7 +65,7 @@ func changeState(newState: PlayerState):
 
 # Called every frame. 'd' is the elapsed time since the previous frame.
 func _process(d):
-	state.process(d);
+	state.process(Global.adjustDelta(d));
 
 func check_inputs():
 	state.check_inputs();

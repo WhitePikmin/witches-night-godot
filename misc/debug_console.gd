@@ -56,6 +56,8 @@ func executeCommand(command:String,param:String):
 		"start_cutscene":
 			Utils.destroyAllEnemies();
 			Global.Player.startCutscene();
+		"next_level":
+			Global.goto_next_level();
 	pass
 
 func readConsole(text):
