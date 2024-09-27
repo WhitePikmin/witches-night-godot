@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cm52xyyajhele"]
+[gd_scene load_steps=18 format=3 uid="uid://cm52xyyajhele"]
 
 [ext_resource type="Texture2D" uid="uid://bvvp021etelxj" path="res://cutscene/characters/adele/neutral.png" id="1_m8lul"]
 [ext_resource type="Script" path="res://cutscene/code/character.gd" id="2_8enqi"]
@@ -7,8 +7,10 @@
 [ext_resource type="Theme" uid="uid://bup8a4v8mo50w" path="res://cutscene/themes/mainTheme.tres" id="5_i4fql"]
 [ext_resource type="Theme" uid="uid://c3r8157wdircy" path="res://cutscene/themes/nameTheme.tres" id="6_mmo5f"]
 [ext_resource type="StyleBox" uid="uid://cqbaabf8kw46l" path="res://cutscene/themes/styles/boxNameStyle_dark.tres" id="7_wov4h"]
+[ext_resource type="FontFile" uid="uid://bjn7vxup2gvdt" path="res://cutscene/themes/fonts/dum1wide.ttf" id="8_dyi4b"]
 [ext_resource type="Script" path="res://cutscene/code/dialogueBox.gd" id="8_v7880"]
 [ext_resource type="Script" path="res://cutscene/code/dialogueText.gd" id="9_4lv71"]
+[ext_resource type="StyleBox" uid="uid://dy4aqbge2g2lq" path="res://cutscene/themes/styles/dialogueBoxStyle_dark.tres" id="9_vr2i6"]
 [ext_resource type="Texture2D" uid="uid://mooamwvbdewu" path="res://cutscene/star_cursor.png" id="10_rhmje"]
 [ext_resource type="Script" path="res://cutscene/code/StarCursor.gd" id="11_pj55m"]
 
@@ -75,6 +77,7 @@ theme_override_styles/panel = ExtResource("7_wov4h")
 [node name="nameText" type="RichTextLabel" parent="CanvasGroup/dialogueSystem/boxNameContainer"]
 layout_mode = 2
 theme_override_colors/default_color = Color(0.803922, 0.803922, 0.235294, 1)
+theme_override_fonts/normal_font = ExtResource("8_dyi4b")
 text = "Name"
 fit_content = true
 
@@ -87,10 +90,13 @@ offset_bottom = 989.0
 
 [node name="dialogueBox" type="Panel" parent="CanvasGroup/dialogueSystem/dialogueContainer"]
 layout_mode = 2
+theme_override_styles/panel = ExtResource("9_vr2i6")
 script = ExtResource("8_v7880")
 
 [node name="dialogueText" type="RichTextLabel" parent="CanvasGroup/dialogueSystem/dialogueContainer"]
 layout_mode = 2
+theme = ExtResource("5_i4fql")
+theme_override_fonts/normal_font = ExtResource("8_dyi4b")
 text = "Sample Text"
 fit_content = true
 script = ExtResource("9_4lv71")

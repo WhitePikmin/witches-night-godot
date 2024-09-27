@@ -39,7 +39,10 @@ var consoleHistory: Array = [];
 var collectedStarTarget: Vector2 = Vector2(0,0);
 var starDisplay: Node2D;
 var root: Node;
+
 var transitionFade: TransitionFade;
+var stageClearLabel: Label;
+
 @onready var HUD: CanvasLayer = $HUD;
 
 @export var starCount: int:	
@@ -146,3 +149,8 @@ func adjustDelta(delta:float):
 	if delta > DELTA_LIMIT:
 		return FRAME_DURATION;
 	return delta;
+
+
+func endLevel():
+	if(stageClearLabel):
+		stageClearLabel.startAnimation();

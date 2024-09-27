@@ -1,14 +1,10 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bup8a4v8mo50w"]
-
-[ext_resource type="StyleBox" uid="uid://dy4aqbge2g2lq" path="res://themes/styles/dialogueBoxStyle_dark.tres" id="1_2llka"]
-[ext_resource type="FontFile" uid="uid://bjn7vxup2gvdt" path="res://themes/fonts/dum1wide.ttf" id="2_3iv43"]
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://bup8a4v8mo50w"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vef4p"]
 
 [resource]
-default_font = ExtResource("2_3iv43")
 default_font_size = 48
-Panel/styles/panel = ExtResource("1_2llka")
+Panel/styles/panel = null
 PanelContainer/styles/panel = SubResource("StyleBoxEmpty_vef4p")
 RichTextLabel/colors/font_outline_color = Color(0, 0, 0, 1)
 RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0.752941)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://n7p7trvgoixw"]
+[gd_scene load_steps=30 format=3 uid="uid://n7p7trvgoixw"]
 
 [ext_resource type="Script" path="res://rooms/HUD.gd" id="1_vld40"]
 [ext_resource type="Shader" path="res://shader/crt.gdshader" id="2_br5qv"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://cxa2lvgwu2qsn" path="res://shader/bayer16tile2.png" id="12_vindk"]
 [ext_resource type="Script" path="res://misc/boss_healthbar.gd" id="13_8gjgh"]
 [ext_resource type="Texture2D" uid="uid://c2s1ich0ry81m" path="res://images/sprites/spr_boss_bar_outline-0.png" id="14_0n8t8"]
+[ext_resource type="FontFile" uid="uid://bvqijon47nqp5" path="res://cutscene/themes/fonts/celt.ttf" id="15_5f1dc"]
+[ext_resource type="Script" path="res://misc/stage_clear.gd" id="16_m53yh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ksru"]
 shader = ExtResource("2_br5qv")
@@ -44,19 +46,71 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:position")
+tracks/0/path = NodePath("../StageClear:modulate")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector2(0, 0)]
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StageClear:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-75, 188.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-2880, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_agkj6"]
-resource_name = "fade-in"
-length = 0.4
+resource_name = "stage-clear-animation"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../StageClear:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1.03333, 2.53333, 4.03333, 5.53333),
+"transitions": PackedFloat32Array(0.297302, 0.307786, 3.03143, 2.92817),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("../StageClear:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1.03333, 2.53333, 4.03333, 5.53333),
+"transitions": PackedFloat32Array(0.297302, 1, 3.13834, 2.92817),
+"update": 0,
+"values": [Vector2(450, 576), Vector2(450, 376), Vector2(450, 376), Vector2(450, 176)]
+}
+
+[sub_resource type="Animation" id="Animation_k4376"]
+resource_name = "transition-in"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -64,15 +118,15 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Vector2(0, 0), Vector2(1920, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_2rvex"]
-resource_name = "fade-out"
-length = 0.4
+[sub_resource type="Animation" id="Animation_smupl"]
+resource_name = "transition-out"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -80,17 +134,18 @@ tracks/0/path = NodePath(".:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.333333),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector2(-2880, 0), Vector2(0, 0)]
+"values": [Vector2(-1920, 0), Vector2(0, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rstwe"]
 _data = {
 "RESET": SubResource("Animation_4o0xl"),
-"fade-in": SubResource("Animation_agkj6"),
-"fade-out": SubResource("Animation_2rvex")
+"stage-clear-animation": SubResource("Animation_agkj6"),
+"transition-in": SubResource("Animation_k4376"),
+"transition-out": SubResource("Animation_smupl")
 }
 
 [sub_resource type="GDScript" id="GDScript_ae5al"]
@@ -251,13 +306,12 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 
 [node name="TransitionFade" type="ColorRect" parent="."]
-visible = false
 z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 960.0
-offset_bottom = 540.0
+offset_left = -2880.0
+offset_right = -2880.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
@@ -333,4 +387,26 @@ script = ExtResource("13_8gjgh")
 scale = Vector2(3, 3)
 texture = ExtResource("14_0n8t8")
 
+[node name="StageClear" type="Label" parent="."]
+visible = false
+offset_left = -75.0
+offset_top = 188.5
+offset_right = 1035.0
+offset_bottom = 351.5
+theme_override_colors/font_color = Color(0.728375, 0.720991, 0.939458, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 18
+theme_override_fonts/font = ExtResource("15_5f1dc")
+theme_override_font_sizes/font_size = 128
+text = "STAGE CLEAR!"
+script = ExtResource("16_m53yh")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="StageClear"]
+root_node = NodePath("../../TransitionFade")
+libraries = {
+"": SubResource("AnimationLibrary_rstwe")
+}
+
 [connection signal="animation_finished" from="TransitionFade/AnimationPlayer" to="TransitionFade" method="endAnimation"]
+[connection signal="animation_finished" from="StageClear/AnimationPlayer" to="StageClear" method="_on_animation_player_animation_finished"]

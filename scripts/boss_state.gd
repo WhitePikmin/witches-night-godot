@@ -42,6 +42,7 @@ func explode():
 	snd.stream = load("res://sounds/assets/sfx/snd_flash.wav");
 	snd.play();
 	boss.spawnStars(boss.starCount);
+	Global.endLevel();
 	boss.queue_free();
 
 func spawnStars(count):
